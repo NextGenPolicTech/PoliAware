@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme=”auto”>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    {% block styles %}
+    <!-- Load Bootstrap-Flask CSS here -->
+    {{ bootstrap.load_css() }}
+    <!-- Link to the styles.css here to apply styling to all the child templates.-->
+    <link rel="stylesheet" href="static/css/styles2.css">
+    {% endblock %}
+
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+
+  <body data-bs-theme="dark">
+
+  {% include "header.html" %}
+
+    {% block content %}{% endblock %}
+    {{ bootstrap.load_js() }}
+
+  {% include "footer.html" %}
+
+  </body>
+</html>
