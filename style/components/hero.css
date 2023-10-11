@@ -1,0 +1,71 @@
+.hero {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  background-image: url('americanFlag.jpg');
+  background-color: var(--clr-light);
+  background-size: cover;
+  background-blend-mode: multiply;
+  background-repeat: no-repeat;
+  min-width: 100%; 
+  height: calc(40em + .05rem);
+  border: 3px solid var(--clr-rose);
+}
+
+.hero__indicator{
+  color: var(--clr-white);
+}
+
+/* x- small */
+
+@media (min-width: 475px) {
+  .hero {
+    gap: 2rem;
+    font-size: var(--size-xl);
+
+  }
+  
+}  
+
+/* small */
+/* @media (min-width: 640px) {
+  
+ } 
+
+/* medium */
+ /*@media (min-width: 768px) {
+
+ } 
+
+/* large */
+ @media (min-width: 1024px) {
+  .hero__indicator {
+    font-size: var(--size-5xl);
+  }
+
+  .hero__btn{
+    font-size: var(--size-2xl);
+  }
+ } 
+
+
+
+/* x-x- large*/
+ @media (min-width: 1536px) {
+  .hero {
+    gap: 2.5rem;
+    height: 60em;
+  }
+  .hero__indicator {
+    font-size: var(--size-6xl);
+  }
+
+  .hero__btn{
+    font-size: var(--size-3xl);
+  }
+ }
+ 

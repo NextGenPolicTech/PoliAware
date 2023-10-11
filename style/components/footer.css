@@ -1,0 +1,25 @@
+
+.footer__title{
+  user-select: none;
+  position: sticky;
+  margin-top: 0;
+  font-size: var(--size-xs);
+  font-weight: 400;
+  color: var(--clr-blue);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+}
+
+.footer2__title{
+  user-select: none;
+  position: sticky;
+  margin-top: 0;
+  font-size: var(--size-xs);
+  padding-top: 13em;
+  font-weight: 400;
+  color: var(--clr-blue);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+}

@@ -1,0 +1,153 @@
+
+
+.blocks__senator2{
+  background: white;
+  width: 25em;
+  height: 30em;
+  margin: 2em auto;
+  border: 2px solid var(--clr-rose);
+}
+
+.blocks2__title{
+  color: var(--clr-rose);
+  font-weight: 800;
+}
+
+.blocks2__name{
+  color: var(--clr-rose);
+  width: 15rem;
+  height: 1.5rem;
+  margin-top: .2em;
+  margin-left: 1em;
+  border: 2px solid red;
+  width: 1rem auto;
+
+}
+
+.blocks2__image {
+  width: 15rem;
+  height: 15rem;
+  margin-top: 1em;
+  margin-left: 1em;
+  border: 2px solid var(--clr-black);
+}
+
+.blocks2__description{
+  margin-left: 16.2em; 
+  margin-top: -16.7em;
+  width: 13.3rem;
+  height: 27.5rem;
+  border: 3px solid var(--clr-light);
+}
+
+.blocks2__news{
+  width: 15rem;
+  height: 10.5rem;
+  margin-top: -10.5em;
+  margin-left: 1em;
+  border: 2px solid var(--clr-mapHover);
+}
+
+
+
+/* x- small */
+
+/*@media (min-width: 475px) {
+
+}  
+
+/* small */
+/*@media (min-width: 640px) {
+  
+ } 
+
+/* medium */
+ /*@media (min-width: 768px) {
+
+ } 
+
+/* large */
+ /*@media (min-width: 1024px) {
+ 
+ } 
+
+ /* x-large */
+ /* @media (min-width: 1280px) {
+  
+ }
+
+/* x-x- large*/
+ @media (min-width: 1536px) {
+  .blocks__senator2{
+    width: 25em;
+    height: 35em;
+  }
+
+  .blocks2__title{
+    font-size: var(--size-2xl);
+  }
+  
+  .blocks2__name{
+    width: 25em;
+  }
+  
+  .blocks2__image {
+    margin-top: 1em;
+    margin-left: 1em;
+    border: 2px solid var(--clr-black);
+    width: 25em;
+    height: 17em;
+  }
+  
+  .blocks2__description{
+    display: flex;
+    margin-left: 30.2em; 
+    margin-top: -18.7em;
+    width: 23.3rem;
+    height: 30.5rem;
+
+  }
+  
+  .blocks2__news{
+    display: flex;
+    width: 25rem;
+    height: 13.1rem;
+    border: 2px solid var(--clr-mapHover);
+  }
+ } 
+
+ @media (min-width: 2500px) {
+  .blocks__senator2{
+    width: 25em;
+    height: 35em;
+  }
+
+  .blocks2__title{
+    font-size: var(--size-2xl);
+  }
+  
+  .blocks2__name{
+    width: 45em;
+  }
+  
+  .blocks2__image {
+    width: 45em;
+    height: 17em;
+  }
+  
+  .blocks2__description{
+    display: flex;
+    margin-left: 50.2em; 
+    margin-top: -18.7em;
+    width: 40.3rem;
+    height: 30.5rem;
+  }
+  
+  .blocks2__news{
+    display: flex;
+    width: 45rem;
+    height: 11.1rem;
+    border: 2px solid var(--clr-mapHover);
+  }
+}
+ 

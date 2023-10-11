@@ -1,0 +1,10 @@
+import '../style/modern-normalize.css';
+import '../style/styles.css';
+import '../style/components/header.css';
+import '../style/states/blocks.css';
+import '../style/states/senator1.css';
+import '../style/states/senator2.css';
+import '../style/states/governor.css';
+import '../style/states/officer.css';
+import '../style/components/footer.css';
+import '../style/util.css';
