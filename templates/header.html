@@ -1,23 +1,38 @@
-<nav class="py-2 bg-body-tertiary border-bottom" data-bs-theme="dark">
-    <div class="container d-flex flex-wrap">
-      <ul class="nav me-auto">
-        <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2 active" aria-current="page">Home</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">Features</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">Pricing</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">FAQs</a></li>
-        <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">About</a></li>
-      </ul>
-    </div>
-  </nav>
+<header class="header container">
+      <nav>
+        <!-- This is a Bama-->
+        <li class="header__title">NextGenPoliTech</li>
+        <ul class="header__menu">
+          <li>
+            <a class="header__link" href="{{ url_for('home') }}">Home</a>
+          </li>
+          <li>
+            <a class="header__link" href="{{ url_for('representative') }}"> Representatives</a>
+          </li>
+          <li>
+            <a class="header__link" href="#election"> Election</a>
+          </li>
+          <li>
+            <a class="header__link" href="{{ url_for('news') }}"> News</a>
+          </li>
+          <li class="header__line"></li>
+          <li>
+            <button class="header__switch">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+              </svg>
+            </button>
+          </li>
+          <li>
+            <a class="header__contact header__link" href="{{ url_for('contact') }}">Contact Us</a>
+          </li>
+        </ul>
 
-<header class="py-3 mb-4 border-bottom">
-    <div class="container d-flex flex-wrap justify-content-center">
-      <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
-        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-        <span class="fs-4">Double header</span>
-      </a>
-      <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search" data-np-autofill-form-type="other" data-np-checked="1" data-np-watching="1">
-        <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-      </form>
-    </div>
-  </header>
+         <button class="header__bars">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+          </svg>
+
+         </button>
+      </nav>
+     </header>

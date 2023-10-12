@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/assets/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Congressional District Challenge</title>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/modern-normalize.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/styles.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/header.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/states/blocks.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/states/senator1.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/states/senator2.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/states/governor.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/states/officer.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/footer.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/util.css') }}" />
+  </head>
+  <body>
+    <div id="app"></div>
+
+     {% include "header.html" %}
+    
+    <main class="blocks">
+      <div class="senator1"> 
+      <section class="blocks__senator1 container section">
+        <h7 class="blocks__title "> Senator One</h7>
+        <p class="blocks__image"> Insert Image Here </p>
+        <p class="blocks__name"> Insert Name Here</p>
+        <p class="blocks__description"> Insert Description Here</p>
+        <p class="blocks__news"> Insert Recent News Here </p>
+      </section>
+    </div>
+
+    <div class="senator2"> 
+      <section class="blocks__senator2 container section">
+        <h8 class="blocks2__title"> Senator Two</h8>
+        <p class="blocks2__image"> Insert Image Here </p>
+        <p class="blocks2__name"> Insert Name Here</p>
+        <p class="blocks2__description"> Insert Description Here</p>
+        <p class="blocks2__news"> Insert Recent News Here </p>
+      </section>
+    </div>
+
+      <div class="governor"> 
+      <section class="blocks__governor container section">
+        <h9 class="blocks3__title "> Governor</h9>
+        <p class="blocks3__image"> Insert Image Here </p>
+        <p class="blocks3__name"> Insert Name Here</p>
+        <p class="blocks3__description"> Insert Description Here</p>
+        <p class="blocks3__news"> Insert Recent News Here </p>
+      </section>
+    </div>
+
+      <div class="officer"> 
+      <section class="blocks__officer container section">
+        <h10 class="blocks4__title"> Attorney General </h10>
+        <p class="blocks4__image"> Insert Image Here </p>
+        <p class="blocks4__name"> Insert Name Here</p>
+        <p class="blocks4__description"> Insert Description Here</p>
+        <p class="blocks4__news"> Insert Recent News Here </p>
+      </section> 
+    </div>
+    </main>
+
+     <footer class="footer container section"> 
+      <h5 class="footer__title">NextGenPoliTech</h5>
+     </footer>
+  </body>
+</html>
+    
