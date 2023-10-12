@@ -32,6 +32,9 @@
   margin-left: 1rem;
   font-size: var(--size-xl);
 }
+.contact__description{
+  font-size: var(--size-sm);
+}
 /* x- small */
 @media (min-width: 475px) {
 .voting__video{
@@ -46,6 +49,21 @@
     width: calc(29rem - .05rem);
     height: calc(23rem - .05rem);
   }
+  .featured__about{
+    font-size: var(--size-3xl);
+  }
+  .featured__description{
+    font-size: var(--size-xl);
+  }
+    
+  .vote__title {
+    font-size: var(--size-3xl);
+  }
+
+  .contact__description {
+    font-size: var(--size-2xl);
+  }
+
  } 
 
 /* medium */
@@ -60,12 +78,9 @@
   .voting__video {
     width: calc(35rem - .05rem);
     height: calc(25rem - .05rem);
-  }
   
-  .vote__title {
-    font-size: var(--size-3xl);
-  }
  } 
+}
 
 /* large */
  @media (min-width: 1024px) {

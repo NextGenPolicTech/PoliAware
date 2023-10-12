@@ -1,5 +1,4 @@
 from flask import Flask, render_template, app, redirect
-from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
 from wtforms import (StringField, SubmitField, SelectField)
 from wtforms.validators import DataRequired, URL
