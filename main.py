@@ -1,5 +1,4 @@
 from flask import Flask, render_template, app, redirect
-from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
 from wtforms import (StringField, SubmitField, SelectField)
 from wtforms.validators import DataRequired, URL
@@ -10,6 +9,18 @@ import smtplib as sm
 import sys
 import os
 
+
+# Code for Google Civic API
+url = "https://www.googleapis.com/civicinfo/v2/representatives/"
+apiKey = "AIzaSyC8JpyYJoet115Awj-hWWwlf74axIbI_UY"
+
+header = {"Accept": "application/json"}
+param = {
+    "ocdId": "",
+    "levels": "",
+    "roles": "",
+    "key": apiKey
+}
 
 app = Flask(__name__)
 geo_lookup = GeoLookup("d769f3b499163fe5c76326aa2f29469b")
