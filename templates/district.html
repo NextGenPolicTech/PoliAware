@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/assets/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Congressional District Challenge</title>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/modern-normalize.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/styles.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/header.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/states/blocks.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/states/senator1.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/footer.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/util.css') }}" />
+  </head>
+  <body>
+    <div id="app"></div>
+
+     {% include "header.html" %}
+    
+    <main class="blocks">
+      <div class="rep"> 
+      <section class="blocks__rep blocks__senator1 container section">
+        <h7 class="blocks__title "> Your Representative</h7>
+        <p class="blocks__image"> Insert Image Here </p>
+        <p class="blocks__name"> Insert Name Here</p>
+        <p class="blocks__description"> Insert Description Here</p>
+        <p class="blocks__news"> Insert Recent News Here </p>
+      </section>
+    </div>
+
+    </div>
+    </main>
+
+
+    </main>
+
+
+
+     <footer class="footer container section"> 
+      <h5 class="footer__title">NextGenPoliTech</h5>
+     </footer>
+  </body>
+</html>
+    
