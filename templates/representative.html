@@ -104,29 +104,28 @@
         fillInAddress(place);
       });
 
-      function fillInAddress(place) {  // optional parameter
-        const addressNameFormat = {
-          'street_number': 'short_name long_name',
-          'route': 'long_name',
-          'locality': 'long_name',
-          'administrative_area_level_1': 'short_name',
-          'country': 'long_name',
-          'postal_code': 'short_name',
-        };
-        const getAddressComp = function (type) {
-          for (const component of place.address_components) {
-            if (component.types[0] === type) {
-              return component[addressNameFormat[type]];
-            }
-          }
-          return '';
-        };
-        getFormInputElement('location').value = getAddressComp('street_number') + ' '
-                  + getAddressComp('route');
-        for (const component of componentForm) {
-          // Location field is handled separately above as it has different logic.
-          if (component !== 'location') {
-            getFormInputElement(component).value = getAddressComp(component);
+      function fillInAddress(place) {
+        // Iterate through each address component
+        for (const component of place.address_components) {
+          const componentType = component.types[0]; // Get the component type (e.g., 'street_number', 'locality', 'administrative_area_level_1', etc.)
+
+          switch (componentType) {
+            case 'street_number':
+              getFormInputElement('location').value = component.short_name + ' ';
+              break;
+            case 'route':
+              getFormInputElement('location').value += component.long_name += ' ';
+              break;
+            case 'locality':
+              getFormInputElement('location').value += component.long_name += ', ';
+              break;
+            case 'administrative_area_level_1':
+              getFormInputElement('location').value += component.short_name;
+              break;
+            case 'country':
+              break;
+            case 'postal_code':
+              break;
           }
         }
       }
@@ -159,7 +158,7 @@
                 id="addressForm"
                 name="sentMessage"
                 method="post"
-                action="/"
+                action="/representative"
               >
               <input type="text" placeholder="Address" name="Address" id="location-input"/>
               <!-- Change the url to the url form-->

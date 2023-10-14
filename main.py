@@ -1,12 +1,10 @@
-from flask import Flask, render_template, app, redirect
-from flask import request
-from ipstack import GeoLookup
-import google.generativeai as palm
-import smtplib as sm
-import requests
-import sys
 import os
+import smtplib as sm
 
+import google.generativeai as palm
+import requests
+from flask import Flask, render_template, redirect, request, session, url_for
+from ipstack import GeoLookup
 
 # Use "pip install google-generativeai" to install the google.generativeai module
 # Set up the palm AI module
@@ -32,50 +30,64 @@ defaults = {
 
 
 def get_prompt(name):
-    return (f"Give 10 bullet points of interesting political facts about {name} and their political views. "
-            f"Put each bullet on a new line. For example, 'Support $15 minimum wage. Opposed to abortion rights."
-            f" Support school vouchers. Against universal health care.'")
+    return (f"Give 10 bullet points of  political facts about {name} and their political views. "
+            f"Put each bullet on a new line. For example: 'Support $15 minimum wage. Opposed to abortion rights."
+            f" Support school vouchers. Against universal health care. Supports the death penalty.'")
 
 
 # Code for Google Civic API
-url = "https://www.googleapis.com/civicinfo/v2/representatives/ocdId"
+# Call based on division, for each state
+ocd_url = "https://www.googleapis.com/civicinfo/v2/representatives/ocdId"
 apiKey = "AIzaSyC8JpyYJoet115Awj-hWWwlf74axIbI_UY"
 header = {"Accept": "application/json"}
-param = {
+ocd_param = {
     "ocdId": "",
     "levels": "",
     "roles": "",
     "key": apiKey
 }
-
+# Call based on address, for each district
+url = "https://www.googleapis.com/civicinfo/v2/representatives/"
+param = {
+    "address": "",
+    "includedOffices": True,
+    "levels": "",
+    "roles": "",
+    "key": apiKey
+}
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 geo_lookup = GeoLookup("d769f3b499163fe5c76326aa2f29469b")
 
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
     ip_addr = request.environ['REMOTE_ADDR']
-    print(geo_lookup.get_location(ip_addr),file=sys.stderr)
     return render_template("index.html")
 
 
 @app.route("/representative", methods=['GET', 'POST'])
 def representative():
     if request.method == "POST":
-        print(request.form["Address"])
-        return redirect("/your-representative")
+        param["levels"] = "country"
+        param["roles"] = "legislatorLowerBody"
+        param["address"] = request.form["Address"]
+        response = requests.get(url, params=param, headers=header).json()
+        rep = response["officials"][0]
+        session["rep"] = rep
+        return redirect(url_for("your_representative"))
     return render_template("representative.html")
 
 
 @app.route("/state/<state>")
 def state(state):
-    param["ocdId"] = f"ocd-division/country:us/state:{state}"
+    ocd_param["ocdId"] = f"ocd-division/country:us/state:{state}"
 
     # Senators
-    param["levels"] = "country"
-    param["roles"] = "legislatorUpperBody"
-    response = requests.get(url, params=param, headers=header).json()
+    ocd_param["levels"] = "country"
+    ocd_param["roles"] = "legislatorUpperBody"
+    response = requests.get(ocd_url, params=ocd_param, headers=header).json()
     sen1 = response["officials"][0]
     completion = palm.generate_text(
         **defaults,
@@ -91,9 +103,9 @@ def state(state):
     sen2_desc = completion.result.replace("*", "")
 
     # Governor
-    param["levels"] = "administrativeArea1"
-    param["roles"] = "headOfGovernment"
-    response = requests.get(url, params=param, headers=header).json()
+    ocd_param["levels"] = "administrativeArea1"
+    ocd_param["roles"] = "headOfGovernment"
+    response = requests.get(ocd_url, params=ocd_param, headers=header).json()
     gov = response["officials"][0]
     completion = palm.generate_text(
         **defaults,
@@ -102,8 +114,8 @@ def state(state):
     gov_desc = completion.result.replace("*", "")
 
     # Attorney General
-    param["roles"] = "governmentOfficer"
-    response = requests.get(url, params=param, headers=header).json()
+    ocd_param["roles"] = "governmentOfficer"
+    response = requests.get(ocd_url, params=ocd_param, headers=header).json()
     i = 0
     for office in response["offices"]:
         if "Attorney General" in office["name"] or "Attorney-General" in office["name"]:
@@ -123,7 +135,13 @@ def state(state):
 
 @app.route("/your-representative")
 def your_representative():
-    return render_template("district.html")
+    rep = session.get('rep', None)
+    completion = palm.generate_text(
+        **defaults,
+        prompt=get_prompt("Representative " + rep["name"])
+    )
+    rep_desc = completion.result.replace("*", "")
+    return render_template("district.html", representative=rep, representative_desc=rep_desc)
 
 
 @app.route("/news")
@@ -149,4 +167,4 @@ def contact():
         return render_template("contact.html")
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run( debug=True)
