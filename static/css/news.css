@@ -1,8 +1,4 @@
 
-body {
-  background-color: rgb(200, 250, 200);
-  margin: 0;
-}
 .logo{
   bottom: 100px;
   left: 95px;
@@ -73,7 +69,9 @@ a:hover:after{
 } 
 
 .recentNews {
-  background-color: rgb(200, 250, 200);
+  background-color: rgb(255, 255, 255);
+  margin-left: 5rem ;
+  margin-right: 5rem ;
   overflow:auto;
 }
 .recentNews .news-title {
@@ -159,3 +157,32 @@ a:hover:after{
 .btn-news.btn-contests a:hover {
   color: #000;
 }
+/* x- small */
+
+/*@media (min-width: 475px) {
+
+}  
+
+/* small */
+/* @media (min-width: 640px) {
+
+ } 
+
+/* medium */
+ /*@media (min-width: 768px) {
+
+ } 
+
+/* large */
+ /*@media (min-width: 1024px) {
+ 
+ } 
+
+ /* x-large */
+ /*@media (min-width: 1280px) {
+ }
+
+/* x-x- large*/
+ /*@media (min-width: 1536px) {
+ }
+ */
