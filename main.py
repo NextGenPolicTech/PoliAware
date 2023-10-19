@@ -5,6 +5,8 @@ import google.generativeai as palm
 import requests
 from flask import Flask, render_template, redirect, request, session, url_for
 from ipstack import GeoLookup
+from bs4 import BeautifulSoup
+import lxml
 
 # Use "pip install google-generativeai" to install the google.generativeai module
 # Set up the palm AI module
@@ -18,7 +20,7 @@ defaults = {
   'candidate_count': 1,
   'top_k': 40,
   'top_p': 0.95,
-  'max_output_tokens': 150,
+  'max_output_tokens': 200,
   'stop_sequences': [],
   'safety_settings': [{"category":"HARM_CATEGORY_DEROGATORY","threshold":1},
                       {"category":"HARM_CATEGORY_TOXICITY","threshold":1},
@@ -30,9 +32,15 @@ defaults = {
 
 
 def get_prompt(name):
-    return (f"Give 10 bullet points of  political facts about {name} and their political views. "
-            f"Put each bullet on a new line. For example: 'Support $15 minimum wage. Opposed to abortion rights."
-            f" Support school vouchers. Against universal health care. Supports the death penalty.'")
+    return (f"Give 12 bullet points of  political facts about {name} and their political views. "
+            f"Put each bullet on a new line, most of which contain their view on many different policies."
+            f"Also include their political party and their political position. Example ways to display political"
+            f"view: 'Support/oppose $15 minimum wage. Support/oppose to abortion rights."
+            f" Support/oppose school vouchers. Support/oppose universal health care. Support/oppose the death penalty."
+            f"Support/oppose 2020 election fraud claims. Support/oppose the legalization of marijuana. "
+            f"Support/oppose U.S. support for Israel. Support/oppose U.S. aid to Ukraine. "
+            f"Support/oppose the U.S. withdrawal from Afghanistan. Support/oppose the U.S. withdrawal from Syria. "
+            f"Support/oppose the U.S. withdrawal from the Paris Climate Agreement.'")
 
 
 # Code for Google Civic API
@@ -141,7 +149,16 @@ def your_representative():
         prompt=get_prompt("Representative " + rep["name"])
     )
     rep_desc = completion.result.replace("*", "")
-    return render_template("district.html", representative=rep, representative_desc=rep_desc)
+
+    # Get the image URL
+    wikipedia_url = [x for x in rep["urls"] if "wikipedia" in x][0]
+    response = requests.get(url=wikipedia_url)
+    soup = BeautifulSoup(response.text, "lxml")
+    images = soup.find_all('img')
+    rep_image = [x for x in images if "jpg" in x or "jpeg" in x["src"]][0]["src"]
+
+    return render_template("district.html", representative=rep, representative_desc=rep_desc,
+                           representative_image=rep_image)
 
 
 @app.route("/news")
