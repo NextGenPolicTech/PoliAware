@@ -111,6 +111,35 @@ margin-bottom: 3rem;
     font-size: var(--size-lg);
   }
 
+  @media (min-width: 2500px) {
+    .hero2 {
+      height: calc(90rem - .5rem);
+      width: calc(65rem - .5rem);
+    }
+  
+    .hero2__title{
+      font-size: var(--size-5xl);
+    }
+  
+    .hero2__description{
+      font-size: var(--size-3xl);
+    }
+  
+    .hero2__help {
+      font-size: var(--size-3xl);
+    }
+  
+    .hero2__btn{
+      width: calc(7.5rem - .05rem);
+      font-size: var(--size-3xl);
+    }
+    
+    .hero2__API {
+      margin-bottom: 7rem;
+      size: var(--size-3xl);
+    }
+    
 
  } 
+  }
  

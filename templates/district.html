@@ -9,8 +9,8 @@
     <link rel="stylesheet" href= "{{ url_for('static',filename='css/modern-normalize.css') }}" />
     <link rel="stylesheet" href= "{{ url_for('static',filename='css/styles.css') }}" />
     <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/header.css') }}" />
-    <link rel="stylesheet" href= "{{ url_for('static',filename='css/states/blocks.css') }}" />
-    <link rel="stylesheet" href= "{{ url_for('static',filename='css/states/senator1.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/mobile-nav.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/states/state.css') }}" />
     <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/footer.css') }}" />
     <link rel="stylesheet" href= "{{ url_for('static',filename='css/util.css') }}" />
   </head>
@@ -19,7 +19,9 @@
 
      {% include "header.html" %}
     
-    <main class="blocks">
+
+     <!-- Add the mayor block and everything from the state block-->
+   <!--  <main class="blocks">
       <div class="rep"> 
       <section class="blocks__rep blocks__senator1 container section">
         <h7 class="blocks__title "> Representative {{ representative['name'] }}</h7>
@@ -29,18 +31,54 @@
         <p class="blocks__news"> Insert Recent News Here </p>
       </section>
     </div>
+    </main> -->
 
-    </div>
+    <main>
+      <div class="state">
+        <ul>
+            <li> 
+              <div class="title">Representative {{ representative['name'] }}</div>
+              <div class="state__mini"> 
+                <p class="state__image"> Image Function Coming Soon </p>
+                <p class="state__news"> Insert Recent News Here </p> 
+              </div>
+              <p class="state__party"> {{ representative['party'] }}</p>
+              <p class="state__description"> {{ representative_desc }}</p>
+            </li>
+
+            <li> 
+              <div class="title">Mayor</div>
+              <div class="state__mini"> 
+                <p class="state__image"> Image Function Coming Soon </p>
+                <p class="state__news"> Insert Recent News Here </p> 
+              </div>
+              <p class="state__party"> Insert Mayor Party </p>
+              <p class="state__description">Insert Mayor description</p>
+            </li>
+        </ul>
     </main>
-
-
-    </main>
-
+    <div class="filler"> 
+      <p> MAKE SURE TO ADD THE API THAT WILL BRING STATE INFORMATION FROM THE ADDRESS INTO THE BOXES
+        IT WON'T LET ME ADD THE INFORMATION FROM THE STATE HTML
+      </p>
+      <!-- <button class= "state__btn"> Find more...</button> -->
+      </div>
+  </div>
 
 
      <footer class="footer container section"> 
       <h5 class="footer__title">NextGenPoliTech</h5>
      </footer>
+
+  <!--    <script>
+      var find = document.querySelector(".state__btn");
+
+      find.addEventListener("click", function(){
+        var expand = document.querySelector(".");
+        
+      });
+
+     </script>-->
   </body>
 </html>
     

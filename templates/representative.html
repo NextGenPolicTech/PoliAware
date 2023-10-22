@@ -10,6 +10,7 @@
       <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/header.css') }}" />
       <link rel="stylesheet" href= "{{ url_for('static',filename='css/reps/hero2.css') }}" />
       <link rel="stylesheet" href= "{{ url_for('static',filename='css/reps/map.css') }}" />
+      <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/mobile-nav.css') }}" />
       <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/footer.css') }}" />
       <link rel="stylesheet" href= "{{ url_for('static',filename='css/util.css') }}" />
     <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
@@ -68,6 +69,29 @@
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.48);
         cursor: pointer;
       }
+      @media (min-width: 2500px) {
+
+        .sb-title {
+        position: relative;
+        font-family: 'Lato', sans-serif;
+        font-size: var(--size-2xl);
+      }
+
+      .sb-title-icon {
+        height: 20%;
+        width: 20%;
+      }
+
+      .card-container {
+        display: flex;
+          height: 10rem;
+        font-size: var(--size-2xl);
+      }
+
+
+
+ } 
+      
     </style>
    <script>
     "use strict";

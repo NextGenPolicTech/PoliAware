@@ -9,11 +9,8 @@
     <link rel="stylesheet" href= "{{ url_for('static',filename='css/modern-normalize.css') }}" />
     <link rel="stylesheet" href= "{{ url_for('static',filename='css/styles.css') }}" />
     <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/header.css') }}" />
-    <link rel="stylesheet" href= "{{ url_for('static',filename='css/states/blocks.css') }}" />
-    <link rel="stylesheet" href= "{{ url_for('static',filename='css/states/senator1.css') }}" />
-    <link rel="stylesheet" href= "{{ url_for('static',filename='css/states/senator2.css') }}" />
-    <link rel="stylesheet" href= "{{ url_for('static',filename='css/states/governor.css') }}" />
-    <link rel="stylesheet" href= "{{ url_for('static',filename='css/states/officer.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/mobile-nav.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/states/state.css') }}" />
     <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/footer.css') }}" />
     <link rel="stylesheet" href= "{{ url_for('static',filename='css/util.css') }}" />
   </head>
@@ -22,51 +19,115 @@
 
      {% include "header.html" %}
     
-    <main class="blocks">
-      <div class="senator1"> 
-      <section class="blocks__senator1 container section">
-        <h7 class="blocks__title "> Senator {{ senator1['name'] }}</h7>
-        <img class="blocks__image" src="{{ senator1['photoUrl'] }}" alt="Picture of Senator {{ senator1['name'] }}">
-        <p class="blocks__name"> {{ senator1['party'] }}</p>
-        <p class="blocks__description"> {{ senator1_desc }}</p>
-        <p class="blocks__news"> Insert Recent News Here </p>
-      </section>
-    </div>
+    <main>
+      <div class="state">
+        <ul>
+            <li> <div class="title">Senator {{ senator1['name'] }}</div>
+              <div class="state__mini"> 
+                <img class="state__image" src="{{ senator1['photoUrl'] }}" alt="Picture of Senator {{ senator1['name'] }}">
+                <p class="state__news"> Insert Recent News Here </p> 
+              </div>
+              <p class="state__party"> {{ senator1['party'] }}</p>
+              <p class="state__description"> {{ senator1_desc }}</p> 
+          </li>
+          <li> <div class="title">Senator {{ senator2['name'] }}</div>
+            <div class="state__mini"> 
+              <img class="state__image" src="{{ senator2['photoUrl'] }}" alt="Picture of Senator {{ senator2['name'] }}">
+              <p class="state__news"> Insert Recent News Here </p> 
+            </div>
+            <p class="state__party"> {{ senator2['party'] }}</p>
+            <p class="state__description"> {{ senator2_desc }}</p> 
+          </li>
+           <!-- ADD THE THING FOR GOVERNOR-->
+          <li> <div class="title">Governor {{ governor['name'] }}</div>
+            <div class="state__mini"> 
+              <img class="state__image" src="{{ governor['photoUrl'] }}" alt="Picture of Governor {{ governor['name'] }}">
+              <p class="state__news"> Insert Recent News Here </p> 
+            </div>
+            <p class="state__party"> {{ governor['party'] }}</p>
+            <p class="state__description"> {{ governor_desc }}</p> 
+          </li>
+           <!-- ADD THE THING FOR OFFICER-->
+          <li> 
+            <div>
+              <div class="title">Officer {{ attorneyGeneral['name'] }}</div>
+              <div class="state__mini"> 
+                <img class="state__image" src="{{ attorneyGeneral['photoUrl'] }}" alt="Picture of Attorney General {{ attorneyGeneral['name'] }}">
+                <p class="state__news"> Insert Recent News Here </p> 
+              </div>
+            <p class="state__party"> {{ attorneyGeneral['party'] }}</p>
+           <p class="state__description"> {{ attorneyGeneral_desc }}</p> 
+          </li>
+        </div>
+        </ul>
+      </div>
 
-    <div class="senator2"> 
-      <section class="blocks__senator2 container section">
-        <h8 class="blocks2__title"> Senator {{ senator2['name'] }}</h8>
-        <img class="blocks__image" src="{{ senator2['photoUrl'] }}" alt="Picture of Senator {{ senator2['name'] }}">
-        <p class="blocks2__name"> {{ senator2['party'] }}</p>
-        <p class="blocks2__description"> {{ senator2_desc }}</p>
-        <p class="blocks2__news"> Insert Recent News Here </p>
-      </section>
-    </div>
 
-      <div class="governor"> 
-      <section class="blocks__governor container section">
-        <h9 class="blocks3__title "> Governor {{ governor['name'] }}</h9>
-        <img class="blocks__image" src="{{ governor['photoUrl'] }}" alt="Picture of Governor {{ governor['name'] }}">
-        <p class="blocks3__name"> {{ governor['party'] }}</p>
-        <p class="blocks3__description"> {{ governor_desc }}</p>
-        <p class="blocks3__news"> Insert Recent News Here </p>
-      </section>
-    </div>
-
-      <div class="officer"> 
-      <section class="blocks__officer container section">
-        <h10 class="blocks4__title"> Attorney General {{ attorneyGeneral['name'] }}</h10>
-        <img class="blocks__image" src="{{ attorneyGeneral['photoUrl'] }}" alt="Picture of Attorney General {{ attorneyGeneral['name'] }}">
-        <p class="blocks4__name"> {{ attorneyGeneral['party'] }}</p>
-        <p class="blocks4__description"> {{ attorneyGeneral_desc }}</p>
-        <p class="blocks4__news"> Insert Recent News Here </p>
-      </section> 
-    </div>
+    <!--   <div class="reps">
+        <ul>
+          <li> <div class="title">Representative {{ senator1['name'] }}</div>
+            <div class="state__mini"> 
+              <img class="state__image" src="{{ senator1['photoUrl'] }}" alt="Picture of Senator {{ senator1['name'] }}">
+              <p class="state__news"> Insert Recent News Here </p> 
+            </div>
+            <p class="state__party"> {{ senator1['party'] }}</p>
+            <p class="state__description"> {{ senator1_desc }}</p> 
+        </li>
+        <li> <div class="title">Senator {{ senator2['name'] }}</div>
+          <div class="state__mini"> 
+            <img class="state__image" src="{{ senator2['photoUrl'] }}" alt="Picture of Senator {{ senator2['name'] }}">
+            <p class="state__news"> Insert Recent News Here </p> 
+          </div>
+          <p class="state__party"> {{ senator2['party'] }}</p>
+          <p class="state__description"> {{ senator2_desc }}</p> 
+        </li>
+        <li> <div class="title">Governor {{ governor['name'] }}</div>
+          <div class="state__mini"> 
+            <img class="state__image" src="{{ governor['photoUrl'] }}" alt="Picture of Governor {{ governor['name'] }}">
+            <p class="state__news"> Insert Recent News Here </p> 
+          </div>
+          <p class="state__party"> {{ governor['party'] }}</p>
+          <p class="state__description"> {{ governor_desc }}</p> 
+        </li>
+        <li> <div class="title">Officer {{ attorneyGeneral['name'] }}</div>
+          <div class="state__mini"> 
+            <img class="state__image" src="{{ attorneyGeneral['photoUrl'] }}" alt="Picture of Attorney General {{ attorneyGeneral['name'] }}">
+            <p class="state__news"> Insert Recent News Here </p> 
+          </div>
+          <p class="state__party"> {{ attorneyGeneral['party'] }}</p>
+         <p class="state__description"> {{ attorneyGeneral_desc }}</p> 
+        </li>
+      </ul>
+      </div> -->
     </main>
 
      <footer class="footer container section"> 
       <h5 class="footer__title">NextGenPoliTech</h5>
      </footer>
+
+      <!-- <script>
+      // gets the paragraph description of each person
+      var para = document.querySelectorAll("state__description");
+
+      // Split the paragraph into sentences
+      var sentence = inputParagraph.split("/\.\s+/");
+
+      // Create an unordered list element
+       var ul = document.createElement("ul");
+
+      sentence.forEach(function(sentence) {
+        // Create a list item element
+        var li = document.createElement("li");
+
+        // Set the text content of the list item to the current sentence
+        li.textContent = sentence;
+
+        // Append the list item to the unordered list
+        ul.appendChild(li);
+      });
+      // Append the unordered list to the body of the document or any other element you want to add it to
+      document.body.appendChild(ul);
+     </script> -->
   </body>
 </html>
     

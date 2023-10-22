@@ -7,7 +7,6 @@
 }
 
 .featured__about{
-  margin-left: 1rem;
   display: flex;
   margin-top: -4rem;
   font-size: var(--size-2xl);
@@ -17,14 +16,15 @@
 .featured__description{
   color: var(--clr-blue);
   margin-bottom: 2rem;
+  line-height: 2rem;
 }
 
 .voting__video {
   display: block;
   margin: 0 auto;
-  width: calc(15rem - .05rem);
-  height: calc(12rem - .05rem);
-  margin-bottom: 2rem;
+  width: calc(17.5rem - .05rem);
+  height: calc(15.5rem - .05rem);
+  margin-bottom: 2rem;  
   border: 1px solid var(--clr-rose);
 }
 

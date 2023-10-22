@@ -3,23 +3,26 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home Page</title>
-  <link rel="stylesheet" href= "{{ url_for('static',filename='css/styles.css') }}" />
-  <link rel="stylesheet" href= "{{ url_for('static',filename='css/modern-normalize.css') }}" />
-  <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/header.css') }}" />
   <link rel="preconnect" href="https://fonts.googleapis.com%22%3E/">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
 
-  <link rel="stylesheet" href= "{{ url_for('static',filename='css/news.css') }}">
-  <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/footer.css') }}" />
-  <link rel="stylesheet" href= "{{ url_for('static',filename='css/util.css') }}" />
+  <link rel="stylesheet" href= "{{ url_for('static',filename='css/styles.css') }}" />
+  <link rel="stylesheet" href= "{{ url_for('static',filename='css/modern-normalize.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/header.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/mobile-nav.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/news.css') }}">
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/footer.css') }}" />
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/util.css') }}" />
+
+
 </head>
 
 <body>
- <div class="normal-class">
 
   {% include "header.html" %}
 
+  <div id="app"></div>
   <!--<nav class="the-pages">-->
     <!--add links to articles in href and images to img src-->
     <!--<a style="text-decoration: none;" class="newspage1" href=""> <img src="">NewsPage1 <p class="subtitle">by: John Doe, Jane Doe</p></a> 
@@ -31,6 +34,7 @@
     <a style="text-decoration: none;" class="newspage7" href=""> <img src="">NewsPage7 <p class="subtitle">by: John Doe, Jane Doe</p></a> 
     <a style="text-decoration: none;" class="newspage8" href=""> <img src="">NewsPage8 <p class="subtitle">by: John Doe, Jane Doe</p></a> 
   </nav>-->
+  <div class="normal-class">
   <section class="recentNews">
     <div class="container">
       <h2 class="news-title">News</h2>

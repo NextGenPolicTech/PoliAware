@@ -13,7 +13,7 @@ palmApiKey = "AIzaSyBJEkrAln6h9yp5pfZyr15uauLBMlIOheA"
 palm.configure(api_key=palmApiKey)
 
 defaults = {
-  'model': 'models/text-bison-001',
+  'model': 'models/text-bison-001', 
   'temperature': 0.3,
   'candidate_count': 1,
   'top_k': 40,

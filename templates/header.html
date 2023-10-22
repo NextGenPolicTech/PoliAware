@@ -1,7 +1,16 @@
-<header class="header container">
-      <nav>
-        <!-- This is a Bama-->
-        <li class="header__title">NextGenPoliTech</li>
+
+<!doctype html>
+<head> 
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/assets/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+<body>
+  <header class="header container">
+    <nav>
+      <!-- This is a Bama-->
+      <li class="header__title">NextGenPoliTech</li>
         <ul class="header__menu">
           <li>
             <a class="header__link" href="{{ url_for('home') }}">Home</a>
@@ -16,23 +25,74 @@
             <a class="header__link" href="{{ url_for('news') }}"> News</a>
           </li>
           <li class="header__line"></li>
-          <li>
-            <button class="header__switch">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
-              </svg>
-            </button>
-          </li>
-          <li>
+          <li> 
             <a class="header__contact header__link" href="{{ url_for('contact') }}">About Us</a>
           </li>
         </ul>
-
-         <button class="header__bars">
+        
+        <button class="header__bars">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
           </svg>
-
+          
          </button>
       </nav>
      </header>
+     
+
+        <!-- Mobile Navigation-->
+        <div class="mobile-nav">
+          <ul class="mobile-nav__menu"> 
+            <li>
+              <a class="mobile-nav__link" href="">Home</a>
+            </li>
+            <li>
+              <a class="mobile-nav__link" href="">Representatives </a>
+            </li>
+            <li>
+              <a class="mobile-nav__link" href="#Election">Election</a>
+            </li>
+            <li>
+              <a class="mobile-nav__link" href="{{ url_for('news') }}">News</a>
+            </li>
+            <li class="mobile-nav__link-line"></li>
+            <li>
+              <a class="mobile-nav__about" href="#">About Us</a>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- End of Mobile Navigation-->
+
+        <script>
+          const mobileNav = () => {
+            const headerBtn = document.querySelector('.header__bars');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const mobileLinks = document.querySelectorAll('.mobile-nav__link');
+            
+            let isMobileNavOpen = false;
+          
+            headerBtn.addEventListener('click', () => {
+              isMobileNavOpen = !isMobileNavOpen;
+              if (isMobileNavOpen) {
+                mobileNav.style.display = 'flex';
+                document.body.style.overflowY = 'hidden';
+              } else {
+                mobileNav.style.display = 'none';
+                document.body.style.overflowY = 'auto';
+              }
+            });
+          
+            mobileLinks.forEach(link => {
+              link.addEventListener('click', () => {
+                isMobileNavOpen = false;
+                mobileNav.style.display = 'none';
+                document.body.style.overflowY = 'auto';
+              });
+            });
+          };
+          mobileNav();
+        
+        </script>
+      </body>
+     </html>
