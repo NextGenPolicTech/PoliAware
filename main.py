@@ -84,6 +84,12 @@ def representative():
         response = requests.get(url, params=param, headers=header).json()
         rep = response["officials"][0]
         session["rep"] = rep
+
+        param["levels"] = "locality"
+        param["roles"] = "headOfGovernment"
+        response = requests.get(url, params=param, headers=header).json()
+        mayor = response["officials"][0]
+        session["mayor"] = mayor
         return redirect(url_for("your_representative"))
     return render_template("representative.html")
 
@@ -144,21 +150,48 @@ def state(state):
 @app.route("/your-representative")
 def your_representative():
     rep = session.get('rep', None)
+    mayor = session.get('mayor', None)
     completion = palm.generate_text(
         **defaults,
         prompt=get_prompt("Representative " + rep["name"])
     )
     rep_desc = completion.result.replace("*", "")
 
-    # Get the image URL
-    wikipedia_url = [x for x in rep["urls"] if "wikipedia" in x][0]
+    completion = palm.generate_text(
+        **defaults,
+        prompt=get_prompt("Mayor " + mayor["name"])
+    )
+    mayor_desc = completion.result.replace("*", "")
+
+    # Representative Image
+    wikipedia_url = [x for x in rep["urls"] if "wikipedia" in x]
+    if len(wikipedia_url) == 0:
+        wikipedia_url = [x for x in rep["urls"] if "house.gov" in x][0]
+    else:
+        wikipedia_url = wikipedia_url[0]
     response = requests.get(url=wikipedia_url)
     soup = BeautifulSoup(response.text, "lxml")
     images = soup.find_all('img')
-    rep_image = [x for x in images if "jpg" in x or "jpeg" in x["src"]][0]["src"]
+    rep_image = [x for x in images if "jpg" in x["src"] or "jpeg" in x["src"]]
+    if len(rep_image) > 0:
+        rep_image = rep_image[0]["src"]
+
+    # Mayor Image
+    wikipedia_url = [x for x in mayor["urls"] if "wikipedia" in x]
+    if len(wikipedia_url) == 0:
+        wikipedia_url = mayor["urls"][0]
+    else:
+        wikipedia_url = wikipedia_url[0]
+    response = requests.get(url=wikipedia_url)
+    soup = BeautifulSoup(response.text, "lxml")
+    images = soup.find_all('img')
+    mayor_image = [x for x in images if "jpg" in x["src"] or "jpeg" in x["src"]]
+    if len(mayor_image) > 0:
+        mayor_image = mayor_image[0]["src"]
 
     return render_template("district.html", representative=rep, representative_desc=rep_desc,
-                           representative_image=rep_image)
+                           representative_image=rep_image, mayor_image=mayor_image, mayor=mayor,
+                           mayor_description=mayor_desc)
 
 
 @app.route("/news")
