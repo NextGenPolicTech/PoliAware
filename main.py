@@ -1,5 +1,6 @@
 import os
 import smtplib as sm
+import PIL.Image
 
 import google.generativeai as palm
 import requests
@@ -20,7 +21,7 @@ defaults = {
   'candidate_count': 1,
   'top_k': 40,
   'top_p': 0.95,
-  'max_output_tokens': 200,
+  'max_output_tokens': 130,
   'stop_sequences': [],
   'safety_settings': [{"category":"HARM_CATEGORY_DEROGATORY","threshold":1},
                       {"category":"HARM_CATEGORY_TOXICITY","threshold":1},
@@ -32,15 +33,11 @@ defaults = {
 
 
 def get_prompt(name):
-    return (f"Give 12 bullet points of  political facts about {name} and their political views. "
-            f"Put each bullet on a new line, most of which contain their view on many different policies."
-            f"Also include their political party and their political position. Example ways to display political"
-            f"view: 'Support/oppose $15 minimum wage. Support/oppose to abortion rights."
-            f" Support/oppose school vouchers. Support/oppose universal health care. Support/oppose the death penalty."
-            f"Support/oppose 2020 election fraud claims. Support/oppose the legalization of marijuana. "
-            f"Support/oppose U.S. support for Israel. Support/oppose U.S. aid to Ukraine. "
-            f"Support/oppose the U.S. withdrawal from Afghanistan. Support/oppose the U.S. withdrawal from Syria. "
-            f"Support/oppose the U.S. withdrawal from the Paris Climate Agreement.'")
+    return (f"Give exactly 6 bullet points of  political facts about {name} and their political views, "
+            f"most of which contain their view on many different policies."
+            f"Include their positions on top policies such as: Gay marriage, abortion, gun control, death penalty"
+            f", legalization of marijuana, minimum wage, universal health care, drug price regulations, and free"
+            f"college tuition.")
 
 
 # Code for Google Civic API
@@ -71,7 +68,6 @@ geo_lookup = GeoLookup("d769f3b499163fe5c76326aa2f29469b")
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    ip_addr = request.environ['REMOTE_ADDR']
     return render_template("index.html")
 
 
@@ -107,14 +103,14 @@ def state(state):
         **defaults,
         prompt=get_prompt("Senator " + sen1["name"])
     )
-    sen1_desc = completion.result.replace("*", "")
+    sen1_desc = completion.result
 
     sen2 = response["officials"][1]
     completion = palm.generate_text(
         **defaults,
         prompt=get_prompt("Senator " + sen2["name"])
     )
-    sen2_desc = completion.result.replace("*", "")
+    sen2_desc = completion.result
 
     # Governor
     ocd_param["levels"] = "administrativeArea1"
@@ -125,7 +121,7 @@ def state(state):
         **defaults,
         prompt=get_prompt("Governor " + gov["name"])
     )
-    gov_desc = completion.result.replace("*", "")
+    gov_desc = completion.result
 
     # Attorney General
     ocd_param["roles"] = "governmentOfficer"
@@ -140,7 +136,7 @@ def state(state):
         **defaults,
         prompt=get_prompt("Attorney General " + ag["name"])
     )
-    ag_desc = completion.result.replace("*", "")
+    ag_desc = completion.result
 
     return render_template("state.html", senator1=sen1, senator2=sen2, governor=gov, attorneyGeneral=ag
                            , senator1_desc=sen1_desc, senator2_desc=sen2_desc, governor_desc=gov_desc,
@@ -155,13 +151,13 @@ def your_representative():
         **defaults,
         prompt=get_prompt("Representative " + rep["name"])
     )
-    rep_desc = completion.result.replace("*", "")
+    rep_desc = completion.result
 
     completion = palm.generate_text(
         **defaults,
         prompt=get_prompt("Mayor " + mayor["name"])
     )
-    mayor_desc = completion.result.replace("*", "")
+    mayor_desc = completion.result
 
     # Representative Image
     wikipedia_url = [x for x in rep["urls"] if "wikipedia" in x]
