@@ -1,4 +1,6 @@
-<head>
+<!DOCTYPE HTML>
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,47 +13,20 @@
     <link rel="stylesheet" href= "{{ url_for('static',filename='css/modern-normalize.css') }}" />
       <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/header.css') }}" />
       <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/mobile-nav.css') }}" />
-      <link rel="stylesheet" href= "{{ url_for('static',filename='css/news.css') }}">
+      <link rel="stylesheet" href= "{{ url_for('static',filename='css/elect/elections.css') }}">
       <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/footer.css') }}" />
       <link rel="stylesheet" href= "{{ url_for('static',filename='css/util.css') }}" />
-  
-  
-  </head>
-
-  <header class = "countdown">
-        <!DOCTYPE HTML>
-    <html>
-    <head>
-    <p class="election-title">Time Until 2024 Presidential Election</p>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <p class = "election-caption">(November 5th, 2024)</p>
-
-    <style>
-    p {
-        text-align: center;
-        font-size: 60px;
-        margin-top: 0px;
-        font-family: Roboto, sans-serif;
-    }
-    .election-title{
-        text-align: center;
-        font-size: 40px;
-        margin-top: 5px;
-        color: red;
-        font-family: Roboto, sans-serif;
-    }
-    .election-caption{
-        text-align: center;
-        font-size: 15px;
-        position: relative;
-        color: blue;
-        font-family: Roboto, sans-serif;
-    }
-    </style>
     </head>
     <body>
+    <div id="app"></div>
 
-    <p id="demo"></p>
+    {% include "header.html" %}
+    <main class="election hero2"> 
+    <p class="election-title">Time Until 2024 Presidental Election</p>
+    <p class="election-caption">(November 5th, 2024)</p>
+    <p class="election-timer"id="demo"></p>
+    </main>
+
     <script>
     // Set the date we're counting down to
     var countDownDate = new Date("November 5, 2024 0:0:0").getTime();
@@ -84,18 +59,4 @@
     </script>
 
     </body>
-    </html>
-
-    <style>
-        .countdown{
-            position: relative;
-            background-color: rgb(189, 189, 213);
-            font-family: Roboto, sans-serif;
-        }
-    </style>
-
-
-
-
-
-</header>
+</html>
