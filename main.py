@@ -198,6 +198,10 @@ def your_representative():
 def news():
     return render_template("news.html")
 
+@app.route("/elections")
+def elections():
+    return render_template("elections.html")
+
 @app.route("/contact")
 def contact():
     if request.method == "GET":

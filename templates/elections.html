@@ -1,4 +1,6 @@
-<head>
+<!DOCTYPE HTML>
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +13,7 @@
     <link rel="stylesheet" href= "{{ url_for('static',filename='css/modern-normalize.css') }}" />
       <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/header.css') }}" />
       <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/mobile-nav.css') }}" />
-      <link rel="stylesheet" href= "{{ url_for('static',filename='css/news.css') }}">
+      <link rel="stylesheet" href= "{{ url_for('static',filename='css/elect/elections.css') }}">
       <link rel="stylesheet" href= "{{ url_for('static',filename='css/components/footer.css') }}" />
       <link rel="stylesheet" href= "{{ url_for('static',filename='css/util.css') }}" />
   
@@ -55,8 +57,15 @@
     </style>
     </head>
     <body>
+    <div id="app"></div>
+ 
+    {% include "header.html" %}
+    <main class="election hero2"> 
+    <p class="election-title">Time Until 2024 Presidental Election</p>
+    <p class="election-caption">(November 5th, 2024)</p>
+    <p class="election-timer"id="demo"></p>
+    </main>
 
-    <p id="demo"></p>
     <script>
     // Set the date we're counting down to
     var countDownDate = new Date("November 5, 2024 0:0:0").getTime();
