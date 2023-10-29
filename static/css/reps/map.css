@@ -24,8 +24,7 @@ path:hover {
   display: block;
   top: 0;
   left: 0;
-  width: 50em;
-  height: 20%;
+  height: auto;
 }
 
 #details-box {

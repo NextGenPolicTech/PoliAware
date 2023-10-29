@@ -33,7 +33,7 @@ html, body{
   flex-direction: column;
   margin: 0;
   padding: 0;
-  background-image: url(../assets/img/background.png);
+  /*background-image: url(../assets/background.jpg); */
   min-height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;

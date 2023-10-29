@@ -18,15 +18,15 @@
           <li>
             <a class="header__link" href="{{ url_for('representative') }}"> Representatives</a>
           </li>
-          <li>
+         <!--  <li>
             <a class="header__link" href="{{ url_for('elections') }}"> Election</a>
-          </li>
+          </li> -->
           <li>
             <a class="header__link" href="{{ url_for('news') }}"> News</a>
           </li>
           <li class="header__line"></li>
           <li> 
-            <a class="header__contact header__link" href="{{ url_for('contact') }}">About Us</a>
+            <a class="header__contact header__link" href="{{ url_for('contact') }}">Contact Us</a>
           </li>
         </ul>
         
@@ -49,15 +49,16 @@
             <li>
               <a class="mobile-nav__link" href="{{ url_for('representative') }}">Representatives </a>
             </li>
+            <!-- 
             <li>
               <a class="mobile-nav__link" href="{{ url_for('elections') }}">Election</a>
-            </li>
+            </li> -->
             <li>
               <a class="mobile-nav__link" href="{{ url_for('news') }}">News</a>
             </li>
             <li class="mobile-nav__link-line"></li>
             <li>
-              <a class="mobile-nav__about" href="#">About Us</a>
+              <a class="mobile-nav__about" href="{{ url_for('contact') }}">Contact Us</a>
             </li>
           </ul>
         </div>
