@@ -1,4 +1,5 @@
 /*The non media code is for everything for screens smaller than 475 px */
+
 .header{
   display: flex;
   justify-content: flex-end;
@@ -25,7 +26,7 @@
 }
 
 .header__bars{ 
-  color: var(--clr-black) !important;
+  color: var(--clr-black);
   width: var(--size-2xl);
   height: var(--size-2xl);
   display: flex;
