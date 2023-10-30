@@ -1,22 +1,34 @@
 import os
 import smtplib as sm
-import PIL.Image
+
+import openai
+from PIL import Image
 
 import google.generativeai as palm
 import requests
 from flask import Flask, render_template, redirect, request, session, url_for
 from ipstack import GeoLookup
 from bs4 import BeautifulSoup
+from googlesearch import search
+from gnews import GNews
+
+gn = GNews(language='en', country='US', period='7d', max_results = 9)
+
 import lxml
 
 # Use "pip install google-generativeai" to install the google.generativeai module
 # Set up the palm AI module
 palmApiKey = "AIzaSyBJEkrAln6h9yp5pfZyr15uauLBMlIOheA"
 
+openai.api_key = "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"
+
+messages = [
+    {"role": "system", "content":"You are a generative AI who's only role is to utilize links found on the web to generate a description of a politician. You are not allowed to use any other information other than the links provided."},]
+
 palm.configure(api_key=palmApiKey)
 
 defaults = {
-  'model': 'models/text-bison-001', 
+  'model': 'models/text-bison-001',
   'temperature': 0.3,
   'candidate_count': 1,
   'top_k': 40,
@@ -31,6 +43,20 @@ defaults = {
                       {"category":"HARM_CATEGORY_DANGEROUS","threshold":2}],
 }
 
+def retrieve_information(query):
+    results = []
+    for result in search(query, num_results=3):
+        results.append(result)
+    results = ', '.join(results)
+    return results
+
+def generate_response(results, name):
+    messages.append({"role": "user", "content": "Please generate a short (3 sentences) description of " + name + " based on the following links: " + results + ". Please be sure to give a short summary of their political views and their stance on major policies. You MUST provide the summary and cannot state that there is no information to be found. If necessary, you may use what you know and fabricate believable information."})
+    completions = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo", messages=messages
+        )
+    messages.pop((len(messages) - 1))
+    return completions.choices[0].message.content
 
 def get_prompt(name):
     return (f"Give exactly 6 bullet points of  political facts about {name} and their political views, "
@@ -147,17 +173,13 @@ def state(state):
 def your_representative():
     rep = session.get('rep', None)
     mayor = session.get('mayor', None)
-    completion = palm.generate_text(
-        **defaults,
-        prompt=get_prompt("Representative " + rep["name"])
-    )
-    rep_desc = completion.result
+    results = retrieve_information(rep["name"])
+    response = generate_response(results, rep["name"])
+    rep_desc = response
 
-    completion = palm.generate_text(
-        **defaults,
-        prompt=get_prompt("Mayor " + mayor["name"])
-    )
-    mayor_desc = completion.result
+    results = retrieve_information(mayor["name"])
+    response = generate_response(results, mayor["name"])
+    mayor_desc = response
 
     # Representative Image
     wikipedia_url = [x for x in rep["urls"] if "wikipedia" in x]
@@ -189,10 +211,11 @@ def your_representative():
                            representative_image=rep_image, mayor_image=mayor_image, mayor=mayor,
                            mayor_description=mayor_desc)
 
-
-@app.route("/news")
+@app.route("/news", methods=['GET'])
 def news():
-    return render_template("news.html")
+    news = gn.get_news("USA politics")
+    return render_template("news.html", news=news)
+
 
 @app.route("/elections")
 def elections():
