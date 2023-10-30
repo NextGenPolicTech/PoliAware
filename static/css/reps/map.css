@@ -2,7 +2,7 @@
 
 path {
   stroke: black;
-  fill: rgba(0, 0, 0, 0.518) !important; 
+  fill: rgba(0, 0, 0, 0.518) !important;  
 
   transition: fill .4s ease;
   transform-origin: center center;

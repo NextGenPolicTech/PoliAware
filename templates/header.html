@@ -36,6 +36,7 @@
           </svg>
           
          </button>
+         
       </nav>
      </header>
      
@@ -48,6 +49,9 @@
             </li>
             <li>
               <a class="mobile-nav__link" href="{{ url_for('representative') }}">Representatives </a>
+            </li>
+            <li>
+              <div id="google_translate_element"></div>
             </li>
             <!-- 
             <li>
@@ -64,7 +68,6 @@
         </div>
         
         <!-- End of Mobile Navigation-->
-
         <script>
           const mobileNav = () => {
             const headerBtn = document.querySelector('.header__bars');
