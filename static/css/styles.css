@@ -39,6 +39,7 @@ html, body{
   min-height: 100vh;
   scroll-behavior: smooth;
   font-family: 'Lato', sans-serif;
+  border: 2px dashed var(--clr-blue);
   }
 
 * {

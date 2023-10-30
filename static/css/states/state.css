@@ -39,9 +39,9 @@ body{
   line-height: 50px; 
   color: var(--clr-rose);
   border: 4px solid var(--clr-blue);
+  font-size: var(--size-base);
   text-align: center;
   font-weight: 600;
-  font-size: 20px;
  
 }
 
@@ -51,7 +51,8 @@ body{
   width: 80%;
   max-height: 22rem;
   max-width: 18rem;
-  margin-left: 0;
+  margin-left: 1rem;
+  margin-right: 1rem;
   margin-top: .1rem;
   border: 2px solid var(--clr-light);
 }
@@ -77,10 +78,11 @@ body{
 .state__news{
   margin-left: .01rem;
   min-height: 90%;
-  width: 80%;
+  width: 90%;
   border: 4px solid purple;
   justify-content: center;
   text-align: center;
+  display: none;
 }
 
 .state__btn {
@@ -97,12 +99,29 @@ body{
   background-color: white;
 }
 
+@media screen and (min-width:768px) {
+  .state__news{
+    display: unset;
+  }
+
+  .title{
+    font-size: 20px;
+  }
+}
 @media screen and (max-width:1250px){
   .state ul li{
       width:90%;
       margin-left: 40px;
   }
 
+}
+
+@media screen and (min-width: 1251px){
+  .state__image{
+    margin-left: 0;
+    min-height: 20rem;
+    min-width: 18rem;
+  }
 }
 
 @media screen and (max-width:750px){
