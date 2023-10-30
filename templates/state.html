@@ -25,7 +25,7 @@
             <li> <div class="title">Senator {{ senator1['name'] }}</div>
               <div class="state__mini"> 
                 <img class="state__image" src="{{ senator1['photoUrl'] }}" alt="Picture of Senator {{ senator1['name'] }}">
-                <p class="state__news"> Links</p> 
+                <p class="state__news"> {{ senator1_links }}</p>
               </div>
               <p class="state__party"> {{ senator1['party'] }}</p>
               <p class="state__description"> {{ senator1_desc }}</p> 
@@ -33,7 +33,7 @@
           <li> <div class="title">Senator {{ senator2['name'] }}</div>
             <div class="state__mini"> 
               <img class="state__image" src="{{ senator2['photoUrl'] }}" alt="Picture of Senator {{ senator2['name'] }}">
-              <p class="state__news"> Links</p> 
+              <p class="state__news"> {{ senator2_links }}</p>
             </div>
             <p class="state__party"> {{ senator2['party'] }}</p>
             <p class="state__description"> {{ senator2_desc }}</p> 
@@ -42,7 +42,7 @@
           <li> <div class="title">Governor {{ governor['name'] }}</div>
             <div class="state__mini"> 
               <img class="state__image" src="{{ governor['photoUrl'] }}" alt="Picture of Governor {{ governor['name'] }}">
-              <p class="state__news"> Links </p> 
+              <p class="state__news"> {{ governor_links }} </p>
             </div>
             <p class="state__party"> {{ governor['party'] }}</p>
             <p class="state__description"> {{ governor_desc }}</p> 
@@ -53,7 +53,7 @@
               <div class="title">Attorney {{ attorneyGeneral['name'] }}</div>
               <div class="state__mini"> 
                 <img class="state__image" src="{{ attorneyGeneral['photoUrl'] }}" alt="Picture of Attorney General {{ attorneyGeneral['name'] }}">
-                <p class="state__news">  Links </p> 
+                <p class="state__news"> {{ attorneyGeneral_links }} </p>
               </div>
             <p class="state__party"> {{ attorneyGeneral['party'] }}</p>
            <p class="state__description"> {{ attorneyGeneral_desc }}</p> 

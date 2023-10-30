@@ -26,7 +26,7 @@
               <div class="title">Representative {{ representative['name'] }}</div>
               <div class="state__mini"> 
                 <img class="state__image" src="{{ representative_image }}" alt="Picture of Representative {{ representative['name'] }}">
-                <p class="state__news"> Links </p> 
+                <p class="state__news"> {{ representative_links }} </p>
               </div>
               <p class="state__party"> {{ representative['party'] }}</p>
               <p class="state__description"> {{ representative_desc }}</p>
@@ -36,7 +36,7 @@
               <div class="title">Mayor {{ mayor['name'] }}</div>
               <div class="state__mini"> 
                 <img class="state__image" src="{{ mayor_image }}" alt="Picture of Mayor {{ mayor['name'] }}">
-                <p class="state__news"> Links </p> 
+                <p class="state__news"> {{ mayor_links }} </p>
               </div>
               <p class="state__party"> {{ mayor['party'] }} </p>
               <p class="state__description">{{ mayor_description }}</p>

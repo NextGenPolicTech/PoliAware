@@ -1,6 +1,9 @@
 import os
 import smtplib as sm
 
+import urllib.parse
+from bing_image_urls import bing_image_urls
+
 import openai
 from PIL import Image
 
@@ -11,10 +14,11 @@ from ipstack import GeoLookup
 from bs4 import BeautifulSoup
 from googlesearch import search
 from gnews import GNews
+import lxml
 
 gn = GNews(language='en', country='US', period='7d', max_results = 9)
 
-import lxml
+
 
 # Use "pip install google-generativeai" to install the google.generativeai module
 # Set up the palm AI module
@@ -23,7 +27,9 @@ palmApiKey = "AIzaSyBJEkrAln6h9yp5pfZyr15uauLBMlIOheA"
 openai.api_key = "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"
 
 messages = [
-    {"role": "system", "content":"You are a generative AI who's only role is to utilize links found on the web to generate a description of a politician. You are not allowed to use any other information other than the links provided."},]
+    {"role": "system", "content":"You are a generative AI who's only role is to utilize links found on the web to "
+                                 "generate a description of a politician. You are not allowed to use any other "
+                                 "information other than the links provided."},]
 
 palm.configure(api_key=palmApiKey)
 
@@ -125,29 +131,32 @@ def state(state):
     ocd_param["roles"] = "legislatorUpperBody"
     response = requests.get(ocd_url, params=ocd_param, headers=header).json()
     sen1 = response["officials"][0]
-    completion = palm.generate_text(
-        **defaults,
-        prompt=get_prompt("Senator " + sen1["name"])
-    )
-    sen1_desc = completion.result
+    results = retrieve_information(sen1["name"])
+    response = generate_response(results, sen1["name"])
+    sen1_desc = response
+
+    news = gn.get_news(sen1["name"])
+    sen1_link = news[0]["title"] + "\n\n" + news[1]["title"]
 
     sen2 = response["officials"][1]
-    completion = palm.generate_text(
-        **defaults,
-        prompt=get_prompt("Senator " + sen2["name"])
-    )
-    sen2_desc = completion.result
+    results = retrieve_information(sen2["name"])
+    response = generate_response(results, sen2["name"])
+    sen2_desc = response
+
+    news = gn.get_news(sen2["name"])
+    sen2_link = news[0]["title"] + "\n\n" + news[1]["title"]
 
     # Governor
     ocd_param["levels"] = "administrativeArea1"
     ocd_param["roles"] = "headOfGovernment"
     response = requests.get(ocd_url, params=ocd_param, headers=header).json()
     gov = response["officials"][0]
-    completion = palm.generate_text(
-        **defaults,
-        prompt=get_prompt("Governor " + gov["name"])
-    )
-    gov_desc = completion.result
+    results = retrieve_information(gov["name"])
+    response = generate_response(results, gov["name"])
+    gov_desc = response
+
+    news = gn.get_news(gov["name"])
+    gov_link = news[0]["title"] + "\n\n" + news[1]["title"]
 
     # Attorney General
     ocd_param["roles"] = "governmentOfficer"
@@ -158,15 +167,16 @@ def state(state):
             i = office["officialIndices"][0]
             break
     ag = response["officials"][i]
-    completion = palm.generate_text(
-        **defaults,
-        prompt=get_prompt("Attorney General " + ag["name"])
-    )
-    ag_desc = completion.result
+    results = retrieve_information(ag["name"])
+    response = generate_response(results, ag["name"])
+    ag_desc = response
+
+    news = gn.get_news(ag["name"])
+    ag_link = news[0]["title"] + "\n\n" + news[1]["title"]
 
     return render_template("state.html", senator1=sen1, senator2=sen2, governor=gov, attorneyGeneral=ag
                            , senator1_desc=sen1_desc, senator2_desc=sen2_desc, governor_desc=gov_desc,
-                           attorneyGeneral_desc=ag_desc)
+                           attorneyGeneral_desc=ag_desc, senator1_links = sen1_link, senator2_links = sen2_link, governor_links = gov_link, attorneyGeneral_links = ag_link)
 
 
 @app.route("/your-representative")
@@ -181,39 +191,61 @@ def your_representative():
     response = generate_response(results, mayor["name"])
     mayor_desc = response
 
+    #Representative News
+    news = gn.get_news(rep["name"])
+    print(news)
+    rep_link = news[0]["title"]
+
     # Representative Image
-    wikipedia_url = [x for x in rep["urls"] if "wikipedia" in x]
-    if len(wikipedia_url) == 0:
-        wikipedia_url = [x for x in rep["urls"] if "house.gov" in x][0]
-    else:
-        wikipedia_url = wikipedia_url[0]
-    response = requests.get(url=wikipedia_url)
-    soup = BeautifulSoup(response.text, "lxml")
-    images = soup.find_all('img')
-    rep_image = [x for x in images if "jpg" in x["src"] or "jpeg" in x["src"]]
-    if len(rep_image) > 0:
-        rep_image = rep_image[0]["src"]
+    query = rep["name"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    rep_image = image[0]
 
     # Mayor Image
-    wikipedia_url = [x for x in mayor["urls"] if "wikipedia" in x]
-    if len(wikipedia_url) == 0:
-        wikipedia_url = mayor["urls"][0]
-    else:
-        wikipedia_url = wikipedia_url[0]
-    response = requests.get(url=wikipedia_url)
-    soup = BeautifulSoup(response.text, "lxml")
-    images = soup.find_all('img')
-    mayor_image = [x for x in images if "jpg" in x["src"] or "jpeg" in x["src"]]
-    if len(mayor_image) > 0:
-        mayor_image = mayor_image[0]["src"]
+    query = mayor["name"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    mayor_image = image[0]
+
+    #Mayor News
+    news = gn.get_news(mayor["name"])
+    mayor_link = news[0]["title"]
+
 
     return render_template("district.html", representative=rep, representative_desc=rep_desc,
                            representative_image=rep_image, mayor_image=mayor_image, mayor=mayor,
-                           mayor_description=mayor_desc)
+                           mayor_description=mayor_desc, representative_links = rep_link, mayor_links = mayor_link)
 
 @app.route("/news", methods=['GET'])
 def news():
     news = gn.get_news("USA politics")
+
+    query = news[0]["title"]
+    image = bing_image_urls(query, limit=1)
+    first_image_link = image[0]
+    news[0]["image"] = first_image_link
+
+    query = news[1]["title"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    second_image_link = image[0]
+    news[1]["image"] = second_image_link
+
+    query = news[2]["title"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    third_image_link = image[0]
+    news[2]["image"] = third_image_link
+
+    query = news[3]["title"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    fourth_image_link = image[0]
+    news[3]["image"] = fourth_image_link
+
+
+    print(news)
     return render_template("news.html", news=news)
 
 
