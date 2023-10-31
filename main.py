@@ -151,7 +151,10 @@ def state(state):
     query = sen1["name"]
     query = urllib.parse.quote_plus(query)
     image = bing_image_urls(query, limit=1)
-    sen1["photoUrl"] = image[0]
+    if image:
+        sen1["photoUrl"] = image[0]
+    else:
+        sen1["photoUrl"] = "default_url.jpg"
     
     
 
@@ -178,7 +181,11 @@ def state(state):
     query = urllib.parse.quote_plus(query)
     image = bing_image_urls(query, limit=1)
     print(image)
-    sen2["photoUrl"] = image[0]
+    if image:
+        sen2["photoUrl"] = image[0]
+    else:
+        sen2["photoUrl"] = "default_url.jpg"
+
 
     # news = gn.get_news(sen2["name"])
     # sen2_link = news[0]["title"] + "\n\n" + news[1]["title"]
@@ -196,7 +203,11 @@ def state(state):
     query = gov["name"]
     query = urllib.parse.quote_plus(query)
     image = bing_image_urls(query, limit=1)
-    gov["photoUrl"] = image[0]
+    if image:
+        gov["photoUrl"] = image[0]
+    else:
+        gov["photoUrl"] = "default_url.jpg"
+   
 
     # news = gn.get_news(gov["name"])
     # gov_link = news[0]["title"] + "\n\n" + news[1]["title"]
@@ -218,7 +229,10 @@ def state(state):
     query = ag["name"]
     query = urllib.parse.quote_plus(query)
     image = bing_image_urls(query, limit=1)
-    ag["photoUrl"] = image[0]
+    if image:
+        ag["photoUrl"] = image[0]
+    else:
+        ag["photoUrl"] = "default_url.jpg"
 
     # news = gn.get_news(ag["name"])
     # ag_link = news[0]["title"] + "\n\n" + news[1]["title"]
