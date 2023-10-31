@@ -4,6 +4,8 @@ import smtplib as sm
 import urllib.parse
 from bing_image_urls import bing_image_urls
 
+from timeout import timeout
+
 import openai
 from PIL import Image
 
@@ -57,7 +59,8 @@ def retrieve_information(query):
     return results
 
 def generate_response(results, name):
-    messages.append({"role": "user", "content": "Please generate a short (3 sentences) description of " + name + " based on the following links: " + results + ". Please be sure to give a short summary of their political views and their stance on major policies. You MUST provide the summary and cannot state that there is no information to be found. If necessary, you may use what you know and fabricate believable information."})
+    messages.append({"role": "user", "content": "Please generate a short (3 sentences) description of " + name + "based on the following links: " + results + ". Please be sure to give a short summary of their political views and their stance on major policies. You MUST provide the summary and cannot state that there is no information to be found. If necessary, you may use what you know and fabricate believable information. This is very important so please do not let me down and create fake information. And by all means necessary DO NOT MENTION ANYTHING ABOUT THE LINKS I SENT YOU!!!!"})
+    
     completions = openai.ChatCompletion.create(
         model="gpt-3.5-turbo", messages=messages
         )
@@ -69,7 +72,7 @@ def get_prompt(name):
             f"most of which contain their view on many different policies."
             f"Include their positions on top policies such as: Gay marriage, abortion, gun control, death penalty"
             f", legalization of marijuana, minimum wage, universal health care, drug price regulations, and free"
-            f"college tuition.")
+            f"college tuition. Please include '\n' after each bullet point.")
 
 
 # Code for Google Civic API
@@ -131,32 +134,72 @@ def state(state):
     ocd_param["roles"] = "legislatorUpperBody"
     response = requests.get(ocd_url, params=ocd_param, headers=header).json()
     sen1 = response["officials"][0]
-    results = retrieve_information(sen1["name"])
-    response = generate_response(results, sen1["name"])
-    sen1_desc = response
+    # try:
+    #     @timeout(10)
+    #     def retrieve_and_generate():
+    #         results = retrieve_information(sen1["name"])
+    #         response = generate_response(results, sen1["name"])
+    #         sen1_desc = response
+    #
+    #     retrieve_and_generate()
+    # except Exception as e:
+    completion = palm.generate_text(
+        **defaults,
+        prompt=get_prompt("Senator " + sen1["name"])
+    )
+    sen1_desc = completion.result
+    query = sen1["name"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    sen1["photoUrl"] = image[0]
+    
+    
 
-    news = gn.get_news(sen1["name"])
-    sen1_link = news[0]["title"] + "\n\n" + news[1]["title"]
-
+    # news = gn.get_news(sen1["name"])
+    # sen1_link = news[0]["title"] + "\n\n" + news[1]["title"]
+    response = requests.get(ocd_url, params=ocd_param, headers=header).json()
     sen2 = response["officials"][1]
-    results = retrieve_information(sen2["name"])
-    response = generate_response(results, sen2["name"])
-    sen2_desc = response
+    # try:
+    #     @timeout(10)
+    #     def retrieve_and_generate():
+    #         results = retrieve_information(sen2["name"])
+    #         response = generate_response(results, sen2["name"])
+    #         sen2_desc = response
+    #
+    #     retrieve_and_generate()
+    # except Exception as e:
+    completion = palm.generate_text(
+        **defaults,
+        prompt=get_prompt("Senator " + sen2["name"])
+    )
+    sen2_desc = completion.result
+    
+    query = sen2["name"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    print(image)
+    sen2["photoUrl"] = image[0]
 
-    news = gn.get_news(sen2["name"])
-    sen2_link = news[0]["title"] + "\n\n" + news[1]["title"]
+    # news = gn.get_news(sen2["name"])
+    # sen2_link = news[0]["title"] + "\n\n" + news[1]["title"]
 
     # Governor
     ocd_param["levels"] = "administrativeArea1"
     ocd_param["roles"] = "headOfGovernment"
     response = requests.get(ocd_url, params=ocd_param, headers=header).json()
     gov = response["officials"][0]
-    results = retrieve_information(gov["name"])
-    response = generate_response(results, gov["name"])
-    gov_desc = response
+    completion = palm.generate_text(
+        **defaults,
+        prompt=get_prompt("Governor " + gov["name"])
+    )
+    gov_desc = completion.result
+    query = gov["name"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    gov["photoUrl"] = image[0]
 
-    news = gn.get_news(gov["name"])
-    gov_link = news[0]["title"] + "\n\n" + news[1]["title"]
+    # news = gn.get_news(gov["name"])
+    # gov_link = news[0]["title"] + "\n\n" + news[1]["title"]
 
     # Attorney General
     ocd_param["roles"] = "governmentOfficer"
@@ -167,16 +210,22 @@ def state(state):
             i = office["officialIndices"][0]
             break
     ag = response["officials"][i]
-    results = retrieve_information(ag["name"])
-    response = generate_response(results, ag["name"])
-    ag_desc = response
+    completion = palm.generate_text(
+        **defaults,
+        prompt=get_prompt("Attorney General " + ag["name"])
+    )
+    ag_desc = completion.result
+    query = ag["name"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    ag["photoUrl"] = image[0]
 
-    news = gn.get_news(ag["name"])
-    ag_link = news[0]["title"] + "\n\n" + news[1]["title"]
+    # news = gn.get_news(ag["name"])
+    # ag_link = news[0]["title"] + "\n\n" + news[1]["title"]
 
     return render_template("state.html", senator1=sen1, senator2=sen2, governor=gov, attorneyGeneral=ag
                            , senator1_desc=sen1_desc, senator2_desc=sen2_desc, governor_desc=gov_desc,
-                           attorneyGeneral_desc=ag_desc, senator1_links = sen1_link, senator2_links = sen2_link, governor_links = gov_link, attorneyGeneral_links = ag_link)
+                           attorneyGeneral_desc=ag_desc)
 
 
 @app.route("/your-representative")
@@ -186,15 +235,34 @@ def your_representative():
     results = retrieve_information(rep["name"])
     response = generate_response(results, rep["name"])
     rep_desc = response
-
+        
+    #     retrieve_and_generate()
+    # except Exception as e:
+    #     completion = palm.generate_text(
+    #         **defaults,
+    #         prompt=get_prompt("Representative " + rep["name"])
+    #     )
+    #     rep_desc = completion.result
+    #
+    # try:
+    #     @timeout(10)
+    #     def retrieve_and_generate():
     results = retrieve_information(mayor["name"])
     response = generate_response(results, mayor["name"])
     mayor_desc = response
+        
+    #     retrieve_and_generate()
+    # except Exception as e:
+    #     completion = palm.generate_text(
+    #         **defaults,
+    #         prompt=get_prompt("Mayor " + mayor["name"])
+    #     )
+    #     mayor_desc = completion.result
 
-    #Representative News
-    news = gn.get_news(rep["name"])
-    print(news)
-    rep_link = news[0]["title"]
+    # #Representative News
+    # news = gn.get_news(rep["name"])
+    # print(news)
+    # rep_link = news[0]["title"]
 
     # Representative Image
     query = rep["name"]
@@ -208,14 +276,14 @@ def your_representative():
     image = bing_image_urls(query, limit=1)
     mayor_image = image[0]
 
-    #Mayor News
-    news = gn.get_news(mayor["name"])
-    mayor_link = news[0]["title"]
+    # #Mayor News
+    # news = gn.get_news(mayor["name"])
+    # mayor_link = news[0]["title"]
 
 
     return render_template("district.html", representative=rep, representative_desc=rep_desc,
                            representative_image=rep_image, mayor_image=mayor_image, mayor=mayor,
-                           mayor_description=mayor_desc, representative_links = rep_link, mayor_links = mayor_link)
+                           mayor_description=mayor_desc)
 
 @app.route("/news", methods=['GET'])
 def news():

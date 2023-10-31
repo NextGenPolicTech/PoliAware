@@ -9,4 +9,5 @@ gnews~=0.3.5
 googlesearch-python~=1.2.3
 google-generativeai~=0.2.2
 lxml~=4.9.3
+bing-image-urls~=0.1.5
 ```
