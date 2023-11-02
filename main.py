@@ -59,7 +59,7 @@ def retrieve_information(query):
     return results
 
 def generate_response(results, name):
-    messages.append({"role": "user", "content": "Please generate a short (3 sentences) description of " + name + "based on the following links: " + results + ". Please be sure to give a short summary of their political views and their stance on major policies. You MUST provide the summary and cannot state that there is no information to be found. If necessary, you may use what you know and fabricate believable information. This is very important so please do not let me down and create fake information. And by all means necessary DO NOT MENTION ANYTHING ABOUT THE LINKS I SENT YOU!!!!"})
+    messages.append({"role": "user", "content": "Please generate a short (3 sentences) description of " + name + "based on the following links: " + results + ". Please be sure to give a short summary of their political views and their stance on major policies."})
     
     completions = openai.ChatCompletion.create(
         model="gpt-3.5-turbo", messages=messages
