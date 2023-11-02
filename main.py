@@ -1,14 +1,10 @@
 import os
 import smtplib as sm
-
 import urllib.parse
 from bing_image_urls import bing_image_urls
-
 from timeout import timeout
-
 import openai
 from PIL import Image
-
 import google.generativeai as palm
 import requests
 from flask import Flask, render_template, redirect, request, session, url_for
@@ -18,21 +14,18 @@ from googlesearch import search
 from gnews import GNews
 import lxml
 
+
 gn = GNews(language='en', country='US', period='7d', max_results = 9)
-
-
 
 # Use "pip install google-generativeai" to install the google.generativeai module
 # Set up the palm AI module
-palmApiKey = "AIzaSyBJEkrAln6h9yp5pfZyr15uauLBMlIOheA"
-
-openai.api_key = "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"
+palmApiKey = os.environ["palmApiKey"]
+openai.api_key = os.environ["openAiKey"]
 
 messages = [
     {"role": "system", "content":"You are a generative AI who's only role is to utilize links found on the web to "
                                  "generate a description of a politician. You are not allowed to use any other "
                                  "information other than the links provided."},]
-
 palm.configure(api_key=palmApiKey)
 
 defaults = {
@@ -78,7 +71,7 @@ def get_prompt(name):
 # Code for Google Civic API
 # Call based on division, for each state
 ocd_url = "https://www.googleapis.com/civicinfo/v2/representatives/ocdId"
-apiKey = "AIzaSyC8JpyYJoet115Awj-hWWwlf74axIbI_UY"
+apiKey = os.environ["googleCivicApiKey"]
 header = {"Accept": "application/json"}
 ocd_param = {
     "ocdId": "",
@@ -97,7 +90,7 @@ param = {
 }
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.environ["flaskSecretKey"]
 geo_lookup = GeoLookup("d769f3b499163fe5c76326aa2f29469b")
 
 
