@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/assets/vite.svg" />
+    <link rel="icon" href="../static/assets/NextGenPoliTech-Logo.png"  type = "image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Congressional District Challenge</title>
       <link rel="stylesheet" href= "{{ url_for('static',filename='css/styles.css') }}" />
@@ -100,7 +100,7 @@
       const CONFIGURATION = {
         "ctaTitle": "Enter",
         "mapOptions": {"center":{"lat":37.4221,"lng":-122.0841},"fullscreenControl":true,"mapTypeControl":false,"streetViewControl":true,"zoom":11,"zoomControl":true,"maxZoom":22,"mapId":""},
-        "mapsApiKey": "AIzaSyBs2A9UzhTy0WXwfGeUriHMJngaKkeBxc4",
+        "mapsApiKey": "",
         "capabilities": {"addressAutocompleteControl":true,"mapDisplayControl":false,"ctaControl":true}
       };
       const componentForm = [
@@ -158,7 +158,7 @@
   </head>
   <body>
     <div id="app"></div>
-
+    <div id="details-box"></div>
     {% include "header.html" %}
     
     <main>
@@ -695,7 +695,34 @@
      <footer class="footer container section"> 
       <h5 class="footer__title">NextGenPoliTech</h5>
      </footer>
+     
+     <!-- Hover effect on each state which pops their name-->
+     <script> 
 
+      const mapHover = () => {
+          var detailsBox = document.getElementById('details-box');
+      
+          document.addEventListener('mouseover', function (e) {
+            if (e.target.tagName == 'path') {
+              var content = e.target.dataset.name;
+              detailsBox.innerHTML = content;
+              detailsBox.style.opacity = "100%";
+            }
+            else {
+              detailsBox.style.opacity = "0%";
+            }
+          });
+      
+          window.onmousemove = function (e) {
+            var x = e.clientX,
+                y = e.clientY;
+            detailsBox.style.top = (y + 20) + 'px';
+            detailsBox.style.left = (x) + 'px';
+          };
+        };
+        mapHover();
+      
+      </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBs2A9UzhTy0WXwfGeUriHMJngaKkeBxc4&libraries=places&callback=initMap&solution_channel=GMP_QB_addressselection_v1_cAC" async defer></script>
   </body>
 </html>

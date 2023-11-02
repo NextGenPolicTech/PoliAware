@@ -25,7 +25,6 @@
             <li> <div class="title">Senator {{ senator1['name'] }}</div>
               <div class="state__mini"> 
                 <img class="state__image" src="{{ senator1['photoUrl'] }}" alt="Picture of Senator {{ senator1['name'] }}">
-                <p class="state__news"> Insert Recent News Here </p> 
               </div>
               <p class="state__party"> {{ senator1['party'] }}</p>
               <p class="state__description"> {{ senator1_desc }}</p> 
@@ -33,7 +32,6 @@
           <li> <div class="title">Senator {{ senator2['name'] }}</div>
             <div class="state__mini"> 
               <img class="state__image" src="{{ senator2['photoUrl'] }}" alt="Picture of Senator {{ senator2['name'] }}">
-              <p class="state__news"> Insert Recent News Here </p> 
             </div>
             <p class="state__party"> {{ senator2['party'] }}</p>
             <p class="state__description"> {{ senator2_desc }}</p> 
@@ -42,7 +40,6 @@
           <li> <div class="title">Governor {{ governor['name'] }}</div>
             <div class="state__mini"> 
               <img class="state__image" src="{{ governor['photoUrl'] }}" alt="Picture of Governor {{ governor['name'] }}">
-              <p class="state__news"> Insert Recent News Here </p> 
             </div>
             <p class="state__party"> {{ governor['party'] }}</p>
             <p class="state__description"> {{ governor_desc }}</p> 
@@ -50,10 +47,9 @@
            <!-- ADD THE THING FOR OFFICER-->
           <li> 
             <div>
-              <div class="title">Attorney General {{ attorneyGeneral['name'] }}</div>
+              <div class="title">Attorney {{ attorneyGeneral['name'] }}</div>
               <div class="state__mini"> 
                 <img class="state__image" src="{{ attorneyGeneral['photoUrl'] }}" alt="Picture of Attorney General {{ attorneyGeneral['name'] }}">
-                <p class="state__news"> Insert Recent News Here </p> 
               </div>
             <p class="state__party"> {{ attorneyGeneral['party'] }}</p>
            <p class="state__description"> {{ attorneyGeneral_desc }}</p> 
@@ -105,29 +101,7 @@
       <h5 class="footer__title">NextGenPoliTech</h5>
      </footer>
 
-      <!-- <script>
-      // gets the paragraph description of each person
-      var para = document.querySelectorAll("state__description");
-
-      // Split the paragraph into sentences
-      var sentence = inputParagraph.split("/\.\s+/");
-
-      // Create an unordered list element
-       var ul = document.createElement("ul");
-
-      sentence.forEach(function(sentence) {
-        // Create a list item element
-        var li = document.createElement("li");
-
-        // Set the text content of the list item to the current sentence
-        li.textContent = sentence;
-
-        // Append the list item to the unordered list
-        ul.appendChild(li);
-      });
-      // Append the unordered list to the body of the document or any other element you want to add it to
-      document.body.appendChild(ul);
-     </script> -->
+    
   </body>
 </html>
     

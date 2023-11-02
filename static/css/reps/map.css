@@ -2,7 +2,7 @@
 
 path {
   stroke: black;
-  fill: rgba(0, 0, 0, 0.518) !important;
+  fill: rgba(0, 0, 0, 0.518) !important;  
 
   transition: fill .4s ease;
   transform-origin: center center;
@@ -24,8 +24,7 @@ path:hover {
   display: block;
   top: 0;
   left: 0;
-  width: 50em;
-  height: 20%;
+  height: auto;
 }
 
 #details-box {
@@ -47,7 +46,7 @@ path:hover {
 /* x- small */
 
   /*@media (min-width: 475px) {
-
+    
 }  
 
 /* small */
@@ -62,11 +61,19 @@ path:hover {
  } 
 
 /* large */
- /* @media (min-width: 1024px) {
+ @media (min-width: 1024px) {
+  #us-map{
+    padding-left: 8rem;
+    padding-right: 8rem;
+  }
  } 
 
  /* x-large */
- /*@media (min-width: 1280px) {
+ @media (min-width: 1280px) {
+  #us-map{
+    padding-left: 8rem;
+    padding-right: 8rem;
+  }
  }
 
 /* x-x- large*/

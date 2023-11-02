@@ -2,15 +2,15 @@
 <!doctype html>
 <head> 
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/assets/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="../static/assets/NextGenPoliTech-Logo.png"  type = "image/x-icon">
 
 </head>
 <body>
   <header class="header container">
     <nav>
       <!-- This is a Bama-->
-      <li class="header__title">NextGenPoliTech</li>
+      <li class="header__title"> NextGenPoliTech</li>
         <ul class="header__menu">
           <li>
             <a class="header__link" href="{{ url_for('home') }}">Home</a>
@@ -18,15 +18,15 @@
           <li>
             <a class="header__link" href="{{ url_for('representative') }}"> Representatives</a>
           </li>
-          <li>
+         <!--  <li>
             <a class="header__link" href="{{ url_for('elections') }}"> Election</a>
-          </li>
+          </li> -->
           <li>
             <a class="header__link" href="{{ url_for('news') }}"> News</a>
           </li>
           <li class="header__line"></li>
           <li> 
-            <a class="header__contact header__link" href="{{ url_for('contact') }}">About Us</a>
+            <a class="header__contact header__link" href="{{ url_for('contact') }}">Contact Us</a>
           </li>
         </ul>
         
@@ -36,6 +36,7 @@
           </svg>
           
          </button>
+         
       </nav>
      </header>
      
@@ -50,20 +51,23 @@
               <a class="mobile-nav__link" href="{{ url_for('representative') }}">Representatives </a>
             </li>
             <li>
-              <a class="mobile-nav__link" href="{{ url_for('elections') }}">Election</a>
+              <div id="google_translate_element"></div>
             </li>
+            <!-- 
+            <li>
+              <a class="mobile-nav__link" href="{{ url_for('elections') }}">Election</a>
+            </li> -->
             <li>
               <a class="mobile-nav__link" href="{{ url_for('news') }}">News</a>
             </li>
             <li class="mobile-nav__link-line"></li>
             <li>
-              <a class="mobile-nav__about" href="#">About Us</a>
+              <a class="mobile-nav__about" href="{{ url_for('contact') }}">Contact Us</a>
             </li>
           </ul>
         </div>
         
         <!-- End of Mobile Navigation-->
-
         <script>
           const mobileNav = () => {
             const headerBtn = document.querySelector('.header__bars');

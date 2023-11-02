@@ -26,7 +26,7 @@
               <div class="title">Representative {{ representative['name'] }}</div>
               <div class="state__mini"> 
                 <img class="state__image" src="{{ representative_image }}" alt="Picture of Representative {{ representative['name'] }}">
-                <p class="state__news"> Insert Recent News Here </p> 
+                <p class="state__news"> {{ representative_links }} </p>
               </div>
               <p class="state__party"> {{ representative['party'] }}</p>
               <p class="state__description"> {{ representative_desc }}</p>
@@ -36,19 +36,16 @@
               <div class="title">Mayor {{ mayor['name'] }}</div>
               <div class="state__mini"> 
                 <img class="state__image" src="{{ mayor_image }}" alt="Picture of Mayor {{ mayor['name'] }}">
-                <p class="state__news"> Insert Recent News Here </p> 
+                <p class="state__news"> {{ mayor_links }} </p>
               </div>
-              <p class="state__party"> {{ mayor['part y'] }} </p>
+              <p class="state__party"> {{ mayor['party'] }} </p>
               <p class="state__description">{{ mayor_description }}</p>
             </li>
+            
+            
         </ul>
     </main>
-    <div class="filler"> 
-      <p> MAKE SURE TO ADD THE API THAT WILL BRING STATE INFORMATION FROM THE ADDRESS INTO THE BOXES
-        IT WON'T LET ME ADD THE INFORMATION FROM THE STATE HTML
-      </p>
-      <!-- <button class= "state__btn"> Find more...</button> -->
-      </div>
+
   </div>
 
 
@@ -56,15 +53,9 @@
       <h5 class="footer__title">NextGenPoliTech</h5>
      </footer>
 
-  <!--    <script>
-      var find = document.querySelector(".state__btn");
-
-      find.addEventListener("click", function(){
-        var expand = document.querySelector(".");
-        
-      });
-
-     </script>-->
+     <script>
+      
+     </script>
   </body>
 </html>
     

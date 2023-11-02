@@ -12,13 +12,14 @@
 
 .header__title{
   font-weight: 600;
-  display: inline-block;
   font-size: var(--size-3xl);
   color: var(--clr-blue);
   text-decoration: none; 
   list-style: none;
   margin: -11em;
+  display: inline-block;
 }
+
 
 .header__menu{
   display: none;
@@ -30,6 +31,7 @@
   width: var(--size-2xl);
   height: var(--size-2xl);
   display: flex;
+  margin-left: -3rem;
 }
 
 /* x- small */

@@ -31,14 +31,15 @@
 html, body{
   display: flex;
   flex-direction: column;
-  margin: 0;
+  margin: 0; 
   padding: 0;
-  background-image: url(../assets/img/background.png);
+  background-color: rgb(236, 235, 235);
+  /*background-image: linear-gradient(to right, var(--clr-rose), var(--clr-blue));
+  /*background-image: url(../assets/background.jpg); */
   min-height: 100vh;
-  background-size: cover;
-  background-repeat: no-repeat;
   scroll-behavior: smooth;
   font-family: 'Lato', sans-serif;
+  border: 2px dashed var(--clr-blue);
   }
 
 * {

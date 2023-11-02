@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/assets/vite.svg" />
+  <link rel="icon" href="../static/assets/NextGenPoliTech-Logo.png"  type = "image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>News Page</title>
   <link rel="preconnect" href="https://fonts.googleapis.com%22%3E/">
@@ -32,14 +32,14 @@
         <div class="ct-blog col-sm-6 col-md-4">
           <div class="inner">
             <div class="fauxcrop">
-              <a href="#"><img alt="News Entry" src=""></a> <!--insert image line in ""-->
+                <img class="news_image1" src="{{ news[0]["image"] }}" alt="News Entry">
             </div>
             <div class="ct-blog-content">
               <div class="ct-blog-date">
-                <span>Month</span><strong>Day</strong>
+                <p class="article_1Title">{{ news[0]["title"] }}</p>
               </div>
               <h3 class="ct-blog-header">
-                Insert Title
+                <p class="article_1date">{{ news[0]["published date"] }}</p>
               </h3>
             </div>
           </div>
@@ -48,14 +48,14 @@
         <div class="ct-blog col-sm-6 col-md-4">
           <div class="inner">
             <div class="fauxcrop">
-              <a href="#"><img alt="News Entry" src=""></a> <!--insert image line in ""-->
+                <img class="news_image2" src="{{ news[1]["image"] }}" alt="News Entry">
             </div>
             <div class="ct-blog-content">
               <div class="ct-blog-date">
-                <span>Month</span><strong>Day</strong>
+                <p class="article_2Title">{{ news[1]["title"] }}</p>
               </div>
               <h3 class="ct-blog-header">
-                Insert Title
+                <p class="article_2date">{{ news[1]["published date"] }}</p>
               </h3>
             </div>
           </div>
@@ -64,14 +64,14 @@
         <div class="ct-blog col-sm-6 col-md-4">
           <div class="inner">
             <div class="fauxcrop">
-              <a href="#"><img alt="News Entry" src=""></a> <!--insert image line in ""-->
+                <img class="news_image3" src="{{ news[2]["image"] }}" alt="News Entry">
             </div>
             <div class="ct-blog-content">
               <div class="ct-blog-date">
-                <span>Month</span><strong>Day</strong>
+                <p class="article_3Title">{{ news[2]["title"] }}</p>
               </div>
               <h3 class="ct-blog-header">
-                Insert Title
+                <p class="article_3date">{{ news[2]["published date"] }}</p>
               </h3>
             </div>
           </div>
@@ -80,94 +80,14 @@
         <div class="ct-blog col-sm-6 col-md-4">
           <div class="inner">
             <div class="fauxcrop">
-              <a href="#"><img alt="News Entry" src=""></a> <!--insert image line in ""-->
+                <img class="news_image4" src="{{ news[3]["image"] }}" alt="News Entry">
             </div>
             <div class="ct-blog-content">
               <div class="ct-blog-date">
-                <span>Month</span><strong>Day</strong>
+                <p class="article_4Title">{{ news[3]["title"] }}</p>
               </div>
               <h3 class="ct-blog-header">
-                Insert Title
-              </h3>
-            </div>
-          </div>
-        </div>
-        <!--Box 5-->
-        <div class="ct-blog col-sm-6 col-md-4">
-          <div class="inner">
-            <div class="fauxcrop">
-              <a href="#"><img alt="News Entry" src=""></a> <!--insert image line in ""-->
-            </div>
-            <div class="ct-blog-content">
-              <div class="ct-blog-date">
-                <span>Month</span><strong>Day</strong>
-              </div>
-              <h3 class="ct-blog-header">
-                Insert Title
-              </h3>
-            </div>
-          </div>
-        </div>
-        <!--Box 6-->
-        <div class="ct-blog col-sm-6 col-md-4">
-          <div class="inner">
-            <div class="fauxcrop">
-              <a href="#"><img alt="News Entry" src=""></a> <!--insert image line in ""-->
-            </div>
-            <div class="ct-blog-content">
-              <div class="ct-blog-date">
-                <span>Month</span><strong>Day</strong>
-              </div>
-              <h3 class="ct-blog-header">
-                Insert Title
-              </h3>
-            </div>
-          </div>
-        </div>
-        <!--Box 7-->
-        <div class="ct-blog col-sm-6 col-md-4">
-          <div class="inner">
-            <div class="fauxcrop">
-              <a href="#"><img alt="News Entry" src=""></a> <!--insert image line in ""-->
-            </div>
-            <div class="ct-blog-content">
-              <div class="ct-blog-date">
-                <span>Month</span><strong>Day</strong>
-              </div>
-              <h3 class="ct-blog-header">
-                Insert Title
-              </h3>
-            </div>
-          </div>
-        </div>
-        <!--Box 8-->
-        <div class="ct-blog col-sm-6 col-md-4">
-          <div class="inner">
-            <div class="fauxcrop">
-              <a href="#"><img alt="News Entry" src=""></a> <!--insert image line in ""-->
-            </div>
-            <div class="ct-blog-content">
-              <div class="ct-blog-date">
-                <span>Month</span><strong>Day</strong>
-              </div>
-              <h3 class="ct-blog-header title">
-                Insert Title
-              </h3>
-            </div>
-          </div>
-        </div>
-        <!--Box 9-->
-        <div class="ct-blog col-sm-6 col-md-4">
-          <div class="inner">
-            <div class="fauxcrop">
-              <a href="#"><img alt="News Entry" src=""></a> <!--insert image line in ""-->
-            </div>
-            <div class="ct-blog-content">
-              <div class="ct-blog-date">
-                <span>Month</span><strong>Day</strong>
-              </div>
-              <h3 class="ct-blog-header">
-                Insert Title
+                <p class="article_4date">{{ news[3]["published date"] }}</p>
               </h3>
             </div>
           </div>
@@ -176,7 +96,7 @@
   </section>
 </div>
 
-  <footer class="footer container section"> 
+  <footer class="footer container section">
     <h5 class="footer__title">NextGenPoliTech</h5>
    </footer>
   <!--white space occurs because of the line below-->

@@ -3,6 +3,7 @@
 .hero2{
     height: calc(70rem - .5rem);
     width: calc(50rem - .5rem);
+    
 }
 .hero2__title{
   font-size: var(--size-2xl);
@@ -76,8 +77,9 @@ margin-bottom: 3rem;
  /* x-large */
  @media (min-width: 1280px) {
   .hero2 {
-    height: calc(70rem - .5rem);
+    height: calc(75rem - .5rem);
     width: calc(50rem - .5rem);
+
   }
 
   .hero2__title{

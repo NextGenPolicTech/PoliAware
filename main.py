@@ -1,22 +1,42 @@
 import os
 import smtplib as sm
-import PIL.Image
+
+import urllib.parse
+from bing_image_urls import bing_image_urls
+
+from timeout import timeout
+
+import openai
+from PIL import Image
 
 import google.generativeai as palm
 import requests
 from flask import Flask, render_template, redirect, request, session, url_for
 from ipstack import GeoLookup
 from bs4 import BeautifulSoup
+from googlesearch import search
+from gnews import GNews
 import lxml
+
+gn = GNews(language='en', country='US', period='7d', max_results = 9)
+
+
 
 # Use "pip install google-generativeai" to install the google.generativeai module
 # Set up the palm AI module
 palmApiKey = "AIzaSyBJEkrAln6h9yp5pfZyr15uauLBMlIOheA"
 
+openai.api_key = "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"
+
+messages = [
+    {"role": "system", "content":"You are a generative AI who's only role is to utilize links found on the web to "
+                                 "generate a description of a politician. You are not allowed to use any other "
+                                 "information other than the links provided."},]
+
 palm.configure(api_key=palmApiKey)
 
 defaults = {
-  'model': 'models/text-bison-001', 
+  'model': 'models/text-bison-001',
   'temperature': 0.3,
   'candidate_count': 1,
   'top_k': 40,
@@ -31,13 +51,28 @@ defaults = {
                       {"category":"HARM_CATEGORY_DANGEROUS","threshold":2}],
 }
 
+def retrieve_information(query):
+    results = []
+    for result in search(query, num_results=3):
+        results.append(result)
+    results = ', '.join(results)
+    return results
+
+def generate_response(results, name):
+    messages.append({"role": "user", "content": "Please generate a short (3 sentences) description of " + name + "based on the following links: " + results + ". Please be sure to give a short summary of their political views and their stance on major policies."})
+    
+    completions = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo", messages=messages
+        )
+    messages.pop((len(messages) - 1))
+    return completions.choices[0].message.content
 
 def get_prompt(name):
     return (f"Give exactly 6 bullet points of  political facts about {name} and their political views, "
             f"most of which contain their view on many different policies."
             f"Include their positions on top policies such as: Gay marriage, abortion, gun control, death penalty"
             f", legalization of marijuana, minimum wage, universal health care, drug price regulations, and free"
-            f"college tuition.")
+            f"college tuition. Please include '\n' after each bullet point.")
 
 
 # Code for Google Civic API
@@ -99,18 +134,61 @@ def state(state):
     ocd_param["roles"] = "legislatorUpperBody"
     response = requests.get(ocd_url, params=ocd_param, headers=header).json()
     sen1 = response["officials"][0]
+    # try:
+    #     @timeout(10)
+    #     def retrieve_and_generate():
+    #         results = retrieve_information(sen1["name"])
+    #         response = generate_response(results, sen1["name"])
+    #         sen1_desc = response
+    #
+    #     retrieve_and_generate()
+    # except Exception as e:
     completion = palm.generate_text(
         **defaults,
         prompt=get_prompt("Senator " + sen1["name"])
     )
     sen1_desc = completion.result
+    query = sen1["name"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    if image:
+        sen1["photoUrl"] = image[0]
+    else:
+        sen1["photoUrl"] = "default_url.jpg"
+    
+    
 
+    # news = gn.get_news(sen1["name"])
+    # sen1_link = news[0]["title"] + "\n\n" + news[1]["title"]
+    response = requests.get(ocd_url, params=ocd_param, headers=header).json()
     sen2 = response["officials"][1]
+    # try:
+    #     @timeout(10)
+    #     def retrieve_and_generate():
+    #         results = retrieve_information(sen2["name"])
+    #         response = generate_response(results, sen2["name"])
+    #         sen2_desc = response
+    #
+    #     retrieve_and_generate()
+    # except Exception as e:
     completion = palm.generate_text(
         **defaults,
         prompt=get_prompt("Senator " + sen2["name"])
     )
     sen2_desc = completion.result
+    
+    query = sen2["name"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    print(image)
+    if image:
+        sen2["photoUrl"] = image[0]
+    else:
+        sen2["photoUrl"] = "default_url.jpg"
+
+
+    # news = gn.get_news(sen2["name"])
+    # sen2_link = news[0]["title"] + "\n\n" + news[1]["title"]
 
     # Governor
     ocd_param["levels"] = "administrativeArea1"
@@ -122,6 +200,17 @@ def state(state):
         prompt=get_prompt("Governor " + gov["name"])
     )
     gov_desc = completion.result
+    query = gov["name"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    if image:
+        gov["photoUrl"] = image[0]
+    else:
+        gov["photoUrl"] = "default_url.jpg"
+   
+
+    # news = gn.get_news(gov["name"])
+    # gov_link = news[0]["title"] + "\n\n" + news[1]["title"]
 
     # Attorney General
     ocd_param["roles"] = "governmentOfficer"
@@ -137,6 +226,16 @@ def state(state):
         prompt=get_prompt("Attorney General " + ag["name"])
     )
     ag_desc = completion.result
+    query = ag["name"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    if image:
+        ag["photoUrl"] = image[0]
+    else:
+        ag["photoUrl"] = "default_url.jpg"
+
+    # news = gn.get_news(ag["name"])
+    # ag_link = news[0]["title"] + "\n\n" + news[1]["title"]
 
     return render_template("state.html", senator1=sen1, senator2=sen2, governor=gov, attorneyGeneral=ag
                            , senator1_desc=sen1_desc, senator2_desc=sen2_desc, governor_desc=gov_desc,
@@ -147,52 +246,90 @@ def state(state):
 def your_representative():
     rep = session.get('rep', None)
     mayor = session.get('mayor', None)
-    completion = palm.generate_text(
-        **defaults,
-        prompt=get_prompt("Representative " + rep["name"])
-    )
-    rep_desc = completion.result
+    results = retrieve_information(rep["name"])
+    response = generate_response(results, rep["name"])
+    rep_desc = response
+        
+    #     retrieve_and_generate()
+    # except Exception as e:
+    #     completion = palm.generate_text(
+    #         **defaults,
+    #         prompt=get_prompt("Representative " + rep["name"])
+    #     )
+    #     rep_desc = completion.result
+    #
+    # try:
+    #     @timeout(10)
+    #     def retrieve_and_generate():
+    results = retrieve_information(mayor["name"])
+    response = generate_response(results, mayor["name"])
+    mayor_desc = response
+        
+    #     retrieve_and_generate()
+    # except Exception as e:
+    #     completion = palm.generate_text(
+    #         **defaults,
+    #         prompt=get_prompt("Mayor " + mayor["name"])
+    #     )
+    #     mayor_desc = completion.result
 
-    completion = palm.generate_text(
-        **defaults,
-        prompt=get_prompt("Mayor " + mayor["name"])
-    )
-    mayor_desc = completion.result
+    # #Representative News
+    # news = gn.get_news(rep["name"])
+    # print(news)
+    # rep_link = news[0]["title"]
 
     # Representative Image
-    wikipedia_url = [x for x in rep["urls"] if "wikipedia" in x]
-    if len(wikipedia_url) == 0:
-        wikipedia_url = [x for x in rep["urls"] if "house.gov" in x][0]
-    else:
-        wikipedia_url = wikipedia_url[0]
-    response = requests.get(url=wikipedia_url)
-    soup = BeautifulSoup(response.text, "lxml")
-    images = soup.find_all('img')
-    rep_image = [x for x in images if "jpg" in x["src"] or "jpeg" in x["src"]]
-    if len(rep_image) > 0:
-        rep_image = rep_image[0]["src"]
+    query = rep["name"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    rep_image = image[0]
 
     # Mayor Image
-    wikipedia_url = [x for x in mayor["urls"] if "wikipedia" in x]
-    if len(wikipedia_url) == 0:
-        wikipedia_url = mayor["urls"][0]
-    else:
-        wikipedia_url = wikipedia_url[0]
-    response = requests.get(url=wikipedia_url)
-    soup = BeautifulSoup(response.text, "lxml")
-    images = soup.find_all('img')
-    mayor_image = [x for x in images if "jpg" in x["src"] or "jpeg" in x["src"]]
-    if len(mayor_image) > 0:
-        mayor_image = mayor_image[0]["src"]
+    query = mayor["name"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    mayor_image = image[0]
+
+    # #Mayor News
+    # news = gn.get_news(mayor["name"])
+    # mayor_link = news[0]["title"]
+
 
     return render_template("district.html", representative=rep, representative_desc=rep_desc,
                            representative_image=rep_image, mayor_image=mayor_image, mayor=mayor,
                            mayor_description=mayor_desc)
 
-
-@app.route("/news")
+@app.route("/news", methods=['GET'])
 def news():
-    return render_template("news.html")
+    news = gn.get_news("USA politics")
+
+    query = news[0]["title"]
+    image = bing_image_urls(query, limit=1)
+    first_image_link = image[0]
+    news[0]["image"] = first_image_link
+
+    query = news[1]["title"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    second_image_link = image[0]
+    news[1]["image"] = second_image_link
+
+    query = news[2]["title"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    third_image_link = image[0]
+    news[2]["image"] = third_image_link
+
+    query = news[3]["title"]
+    query = urllib.parse.quote_plus(query)
+    image = bing_image_urls(query, limit=1)
+    fourth_image_link = image[0]
+    news[3]["image"] = fourth_image_link
+
+
+    print(news)
+    return render_template("news.html", news=news)
+
 
 @app.route("/elections")
 def elections():
