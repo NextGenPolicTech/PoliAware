@@ -1,4 +1,4 @@
-# Representative Finder Website
+# PoliAware Politics Website
 
 Welcome to the Representative Finder Website, an innovative tool designed to help users discover their political representatives quickly and conveniently. This project was created for the **2024 Congressional App Challenge**, aiming to increase political awareness and engagement using modern, accessible technology.
 
@@ -28,7 +28,7 @@ Welcome to the Representative Finder Website, an innovative tool designed to hel
 ![Input Location or Select State Screenshot](https://ibb.co/KwHjBc3)
 
 ### Representative Information (Example: Florida)
-![Florida Representative Info Screenshot](https://ibb.co/MRHB5yq)
+![Florida Representative Info Screenshot]([https://ibb.co/MRHB5yq](https://i.ibb.co/19NzJYH/Poli-Aware-Federal-Page.png))
 
 ## How to Run
 
