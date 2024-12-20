@@ -21,14 +21,14 @@ Welcome to the Representative Finder Website, an innovative tool designed to hel
 ## Screenshots
 
 ### Front Page
-![Front Page Screenshot 1](https://ibb.co/282Rr2T)
-![Front Page Screenshot 2](https://ibb.co/9GLkLzP)
+![Front Page Screenshot 1](website_screenshots/PoliAware_FrontPage_1.png)
+![Front Page Screenshot 2](website_screenshots/PoliAware_FrontPage_2.png)
 
 ### Input Location or Select State
-![Input Location or Select State Screenshot](https://ibb.co/KwHjBc3)
+![Input Location or Select State Screenshot](website_screenshots/PoliAware_Reps_Page.png)
 
 ### Representative Information (Example: Florida)
-![Florida Representative Info Screenshot]([https://ibb.co/MRHB5yq](https://i.ibb.co/19NzJYH/Poli-Aware-Federal-Page.png))
+![Florida Representative Info Screenshot](website_screenshots/PoliAware_Federal_Page.png)
 
 ## How to Run
 
@@ -60,10 +60,6 @@ Welcome to the Representative Finder Website, an innovative tool designed to hel
 
 We welcome contributions to enhance the website! Feel free to submit pull requests or report issues.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 ## Contact
 
-For inquiries or feedback, please contact [your-email@example.com](mailto:your-email@example.com).
+For inquiries or feedback, please contact [josephle@stanford.edu](mailto:josephle@stanford.edu).
